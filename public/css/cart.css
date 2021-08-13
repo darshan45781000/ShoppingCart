@@ -181,6 +181,7 @@ p {
   margin: 0;
   padding: 0;
   font-size: 18px;
+  margin-top: 10px;
 }
 .priceh1{
   color: #0F1111;
@@ -609,7 +610,7 @@ aside {
   }
 
   .Q1{
-    height: 20px;
+    height: 19px;
     margin-left: 30px;
     margin: 1px;
   }
