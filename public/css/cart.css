@@ -158,7 +158,8 @@ body {
 }
 
 .totalcosth4{
-    margin-bottom: 30px;
+    margin-bottom: 50px;
+    font-size: 18px;
 }
 a {
   border: 0 none;
@@ -179,6 +180,7 @@ p {
   font-weight: normal;
   margin: 0;
   padding: 0;
+  font-size: 18px;
 }
 .priceh1{
   color: #0F1111;
@@ -281,6 +283,7 @@ aside {
 .basket-module button{
   width: 300px;
   margin-left: 100px;
+  margin-bottom: 30px;
 }
 
 label {
@@ -334,8 +337,7 @@ label {
 
 .button1 {
   padding: 0;
-  border-color: #D5D9D9;
-  border: 1px solid;
+  border: 1px solid lightgrey;
   border-radius: 8px;
   color: #0F1111;
   background-color: white;
@@ -353,17 +355,17 @@ label {
 
 .checkoutbutton{
   margin-bottom: 20px;
-  margin-top: -30px;
+  margin-top: 1px;
   border-color: #D5D9D9;
   border: 1px solid;
   border-radius: 8px;
   color: #0F1111;
   background-color: white;
   height: 35px;
-  font-size: 20px;
+  font-size: 18px;
   text-align: center;
   background: #FFD814;
-  border-color: #FCD200
+  border-color: #FCD200;
 }
 
 .button1:hover{
@@ -379,7 +381,7 @@ label {
 }
 
 .basket-product {
-  border-bottom: 2px solid black;
+  border-bottom: 2px solid lightgrey;
   padding: 1rem 0;
   position: relative;
   margin-right: 111px;
@@ -397,7 +399,7 @@ label {
 
 .product-frame {
   border: 1px solid #aaa;
-  height: 120px;
+  height: 80px;
   margin-top: 10px;
 }
 
@@ -444,7 +446,7 @@ aside {
 
   .button1 a{
     color: #0F1111;
-    font-size: 17px;
+    font-size: 13px;
   }
   
 
@@ -587,7 +589,7 @@ aside {
     font-size: 60px;
   }
   .item {
-    margin-bottom: 1rem;
+    margin-bottom: 3rem;
   }
   .product-image {
     width: 40%;
@@ -601,13 +603,13 @@ aside {
   }
   .quantity {
     height: 30px;
-    font-size: 25px;
+    font-size: 20px;
     width: 50%;
     color: #0F1111;
   }
 
   .Q1{
-    height: 28px;
+    height: 20px;
     margin-left: 30px;
     margin: 1px;
   }
@@ -623,13 +625,12 @@ aside {
   }
    .button1 {
     padding: 0;
-    border-color: #D5D9D9;
-    border: 1px solid;
+    border: 1px solid lightgrey;
     border-radius: 8px;
     color: #0F1111;
-    background: #F0F2F2;
-    width: 90px;
-    height: 40px;
+    background:white;
+    width: 70px;
+    height: 30px;
     margin-top: -1px;
     margin-left: 40px;
   }
@@ -638,14 +639,13 @@ aside {
 
   .checkoutbutton{
     margin-bottom: 20px;
-    margin-top: -30px;
     border-color: #D5D9D9;
     border: 1px solid;
     border-radius: 8px;
     color: #0F1111;
     background-color: white;
     height: 35px;
-    font-size: 20px;
+    font-size: 18px;
     text-align: center;
     width: 100%;
     background: #FFD814;
@@ -654,6 +654,7 @@ aside {
   
   .checkoutbutton{
     margin-bottom: -3px;
+    margin-top: 1px;
   }
   .summary {
     margin-top: 1.25rem;
