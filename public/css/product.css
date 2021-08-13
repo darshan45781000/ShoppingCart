@@ -1,181 +1,108 @@
-.product-main{
-    margin: 0;
-    padding: 0;
-    background: #ccc;
-    display: flex;
-    justify-content: center;
-    min-height: 100vh;
-    font-family: sans-serif;
+@media only screen and (min-width: 600px) {
+  body {
+   
+    width:50%;
+    margin-left: 25vmax;
+  }
+}
+
+.home_footer
+  {
+    font-size: 60px;
+    margin-right: 100px;
+    margin-left: 20px;
+  }
+
+  
+
+  .cart_footer
+  {
+    font-size: 60px;
   }
   
-  .product_container{
-    width: 800px;
-    height: 400px;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: #fff;
-    margin: 20px;
+:root {
+    --main-radius: 5px;
+    --main-padding: 5px;
+  }
+
+  body {
+    font-family: "Inter", sans-serif;
+  }
+
+  .container {
+    display: grid;
+    height: 100vh;
+    grid-template-columns: 1fr;
+    grid-template-rows: 3fr 3fr 3fr 1fr;
+    grid-template-areas:
+      "image"
+      "description"
+      "order"
+      "menu";
+    grid-gap: 1rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    font-size: 12px;
+    /* color: #004d40; */
+    text-align: center;
+  }
+
+  .image {
+    margin: auto;
+    /* background: whitesmoke; */
+    grid-area: image;
+    border-radius: var(--main-radius);
+    padding-top: var(--main-padding);
   }
   
-  .product_container .img-box{
-    width: 50%;
-    height: 100%;
-    background:white;
-    padding: 5px 5px;
+  .description {
+    
+    /* background: whitesmoke; */
+    grid-area: description;
+    border-radius: var(--main-radius);
+    padding-top: var(--main-padding);
+  }
+
+  .order {
+    /* background: whitesmoke; */
+    grid-area: order;
+    border-radius: var(--main-radius);
+    padding-top: var(--main-padding);
+    
+  }
+
+  .menu {
+    /* background: whitesmoke; */
+    grid-area: menu;
+    display: flex;
+    border-top: 3px solid rgb(166, 166, 166);
+    border-radius: var(--main-radius);
+    padding-top: var(--main-padding);
+  }
+  .add-to-cart {
     display: flex;
     justify-content: center;
     align-items: center;
-    position: relative;
-  }
-  .product_container .img-box img{
-    width: 400px;
-  }
-  
-  .product_container .text-box1{
-    width: 50%;
-    padding: 20px 30px;
-    box-sizing: border-box;
-    background-color: #fff;
-  }
-  
-  .product_container .text-box1 h1{
-    font-size: 3em;
-    color:black;
-    margin-bottom: 5px;
-  }
-  
-  .product_container .text-box1 p{
-    margin-top: 5px;
-    font-size: 1em;
-    line-height: 1.5em;
-    color:#007185;
-  }
-  
-  .product_container .text-box1  h3{
-    font-size: 2em;
-    font-weight: 300;
-    color: #B12704!important;
-  }
-  
-  .dropdown{
-    height: 20px;
-    padding: 5px 5px;
-    margin-bottom: 20px;
-    font-weight: 100;
-    font-size: medium;
-  }
-  .btn{
-    display: inline-block;
-  border-radius: 4px;
-  color: #212121;
-  padding: 10px 20px;
-  font-size: 15px;
-  font-weight: 500;
-  transition: box-shadow .2s ease;
-  vertical-align: super;
-  background: #fff;
-  cursor: pointer;
-  outline: none;
-  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 10%);
-  border: 1px solid #e0e0e0;
-  width: 150px;
-  height: 40px;
+    margin: auto;
+    width: 200px;
+    height: 60px;
+    background: rgb(227, 227, 10);
+    border-radius: 20px / 20px;
+    border-bottom: 2px solid black;
+    margin-bottom: 50px;
   }
 
-  .cart{
-    background: #f0c14b;
-    border-color: #a88734 #9c7e31 #846a29;
+  .order_boarder{
+    border-bottom: 2px solid black;
   }
 
-  .buy{
-    background: #ed9220;
-    border-color: #ca7c1b #be751a #a56616
-  }
-  
-  .Q1{
-    opacity: 1;
-    filter: alpha(opacity=100);
-    z-index: auto;
-    position: static;
-    display: inline;
-    font-weight: normal;
-    margin: 3px;
-    align-items: center; 
-    height: 30px;
-    width: 50px;
-    font-size: large;
-    margin-top: 5px;
-  }
-  
-  @media(max-width:1080px) {
-    .product_container{
-      height: 700px;
-    }
-    
-    
-    .product_container .img-box{
-      width: 100%;
-    }
-  
-    .product_container .img-box img{
-      width: 100%;
-      padding: 40px;
-      box-sizing: border-box;
-    }
-  
-    .product_container .text-box1{
-      width: 100%;
-    }
-  
-    .product_container .text-box1 h1{
-      font-size: 2em;
-      line-height: .8em;
-      margin-bottom: 20px;
-    }
-  
-    .product_container .text-box1 h3{
-      font-size: 2em;
-      font-weight: 200;
-      margin-top: 20px;
-    }
-  
-    .product_container .text-box1 button{
-      padding: 10px 15px;
-      font-size: 1em;
-      margin-top: 30px;
-      width: 100%;
-      height: 80px;
-      border-radius: 15px;
-    }
-    .product_container .text-box1 p{
-      margin-top: 5px;
-      font-size: 1.5em;
-      line-height: 1.5em;
-      color:#007185;
-    }
-    
-    .Q1{
-      margin-top: 20px;
-      font-size: xx-large;
-      height: 50px;
-      width: 70px;
-    }
 
-    .dropdown{
-      font-size: xx-large;
-      
-    }
-  
-    
-  }
 
-  @media screen and (max-width: 620px) {
 
-    .product_container .img-box img{
-      height: 80%;
-      width: 100%;
-      padding: 40px;
-      box-sizing: border-box;
-    }
-  }
+  .grid-box img {
+    width: 70%;
+  } 
+  /*
+ - using shorthand to create 3 columns. Easier to change this now.
+*/
+
