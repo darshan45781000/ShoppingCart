@@ -113,6 +113,20 @@ app.get('/cart', (req, res) => {
 })
 
 
+app.get('/placeorder', (req, res) => {
+    connection.query("select count(*) AS a from carttable",(err, rowss) => {
+        console.log(rowss);
+        console.log(rowss[0].a);
+        let b=rowss[0].a;
+    if (!err) {
+        
+        res.render('placeorder', {  count : b});
+    }     
+       
+})
+})
+
+
 app.post('/delete', (req, res) => {
     let UserId = req.body.UserId;
     let sql = "delete from carttable where CartId=" + UserId;
