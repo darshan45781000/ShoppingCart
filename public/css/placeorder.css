@@ -1,0 +1,190 @@
+
+.checkoutbutton{
+  margin-left: 250px;
+    margin-bottom: 20px;
+    margin-top: 10px;
+    border: 1px solid;
+    border-radius: 5px;
+    border-color: #D5D9D9;
+    color: #0F1111;
+    background-color: white;
+    height: 35px;
+    width: 200px;
+    font-size: 18px;
+    text-align: center;
+    background: linear-gradient(to bottom,#f7dfa5,#f0c14b);;
+    border-color: #a88734 #9c7e31 #846a29;
+  }
+
+  .Name_label{
+    margin-left: 200px;
+  }
+  .Name_text{
+    margin-left: 75px;
+  }
+
+  .Contact_label{
+    margin-left: 196px;
+  }
+
+  .Contact_text{
+    margin-left: 40px;
+  }
+
+  .Address_label{
+    margin-left: 200px;
+  }
+
+  .Address_text{
+    margin-left: 320px;
+    margin-top: -20px;
+  }
+  
+
+  input[type=text], select, textarea {
+    width: 40%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin-top: 6px;
+    margin-bottom: 16px;
+    resize: vertical;
+  }
+
+  .container {
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    padding: 10px;
+    margin-top: 20px;
+  }
+  
+  input[type=submit] {
+    background-color: #04AA6D;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  input[type=submit]:hover {
+    background-color: #45a049;
+  }
+
+  
+  
+  @media only screen and (max-width: 700px) {
+    
+    input[type=text], select, textarea {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+      margin-top: 6px;
+      margin-bottom: 16px;
+      resize: vertical;
+    }
+
+    .Name_label{
+      margin-left: 00px;
+    }
+    .Name_text{
+      margin-left: 0px;
+    }
+  
+    .Contact_label{
+      margin-left: 00px;
+    }
+  
+    .Contact_text{
+      margin-left: 0px;
+    }
+  
+    .Address_label{
+      margin-left: 10px;
+    }
+  
+    .Address_text{
+      margin-left: 0px;
+      margin-top: 0px;
+    }
+    
+    
+    input[type=submit] {
+      background-color: #04AA6D;
+      color: white;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    
+    input[type=submit]:hover {
+      background-color: #45a049;
+    }
+    
+    .container {
+    margin-top: 0px;
+      border-radius: 5px;
+      background-color: #f2f2f2;
+      padding: 10px;
+    }
+
+.checkoutbutton{
+    margin-bottom: 20px;
+    margin-top: 20px;
+    border: 1px solid ;
+    border-color: #D5D9D9;
+    border-radius: 5px;
+    color: #0F1111;
+    background-color: white;
+    height: 55px;
+    width: 90%;
+    font-size: 18px;
+    text-align: center;
+    background: linear-gradient(to bottom,#f7dfa5,#f0c14b);;
+    border-color: #a88734 #9c7e31 #846a29;
+    margin-left: 20px;
+  }
+
+  .a{
+    border: 1px solid #a6a6a6;
+    /* border-top-color: #949494; */
+    /* border-radius: 3px; */
+    width: 220px;
+    margin-left: 60px;
+    height: 40px;
+  }
+
+
+  .a1{
+    border: 1px solid #a6a6a6;
+    /* border-top-color: #949494; */
+    /* border-radius: 3px; */
+    width: 220px;
+    margin-left: 32px;
+    height: 40px;
+  }
+
+  .a2{
+    border: 1px solid #a6a6a6;
+    /* border-top-color: #949494; */
+    /* border-radius: 3px; */
+    width: 220px;
+    margin-left: 45px;
+    height: 40px;
+  }
+
+
+  label{
+      margin-left: 10px;
+  }
+
+ .text_margin {
+      margin-top: 20px;
+      margin-bottom: 20px;
+  }
+
+  }
