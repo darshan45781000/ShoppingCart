@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="css/home.css">
+<link rel="stylesheet" href="css/placeorder.css">
+<link rel="manifest" href="manifest.json">
+<script src="js/input.js"></script>
+<title>Shopping App </title>
+</head>
+
+<body>
+  <nav class="navbar">
+    <div class="brand-title">BuyIteams</div>
+    <a href="#" class="toggle-button">
+      <span class="bar"></span>
+      <span class="bar"></span>
+      <span class="bar"></span>
+    </a>
+    <div class="navbar-links">
+      <ul>
+        <li><a href="/cart"><i class="fa" style="font-size:24px">&#xf07a;</i> <span class='badge badge-warning' id='cartid1'> <%- JSON.stringify(count) %> </span></a></li>
+        <li><a href="#">Orders</a></li>
+        <li><a href="#">Login</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  
+
+
+
+  <div class="container">
+
+    <button class="checkoutbutton"><b>Place your order</b></button>
+
+      <form action="/action_page.php">
+        <div class="Name_label">
+        <label for="fname"> Name</label>
+        <input type="text" id="fname" class="Name_text" name="firstname" placeholder="Your name..">
+      </div>
+
+      <div class="Contact_label">
+        <label for="lname">Contact No</label>
+        <input type="text" id="lname" class="Contact_text" name="lastname" placeholder="Your Contact No..">
+      </div>
+        
+      <div>
+        <div>
+        <label for="subject" class="Address_label">Address</label>
+      </div>
+        <textarea id="subject" class="Address_text" name="subject" placeholder="Your address..." style="height:200px"></textarea>
+      </div>
+      </form>
+    </div>
+  
+
+  
+
+</body>
+
+</html>
