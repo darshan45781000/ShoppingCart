@@ -12,29 +12,10 @@
 </head>
 
 <body>
-  <nav class="navbar">
-    <div class="brand-title">BuyIteams</div>
-    <a href="#" class="toggle-button">
-      <span class="bar"></span>
-      <span class="bar"></span>
-      <span class="bar"></span>
-    </a>
-    <div class="navbar-links">
-      <ul>
-        <li><a href="/cart"><i class="fa" style="font-size:24px">&#xf07a;</i> <span class='badge badge-warning' id='cartid1'> <%- JSON.stringify(count) %> </span></a></li>
-        <li><a href="#">Orders</a></li>
-        <li><a href="#">Login</a></li>
-      </ul>
-    </div>
-  </nav>
-
-  
-
-
 
   <div class="container">
 
-    <button class="checkoutbutton"><b>Place your order</b></button>
+    <button class="checkoutbutton"><a href="/order"><b>Place your order</b></a></button>
 
       <form action="/action_page.php">
         <div class="Name_label">
@@ -54,6 +35,11 @@
         <textarea id="subject" class="Address_text" name="subject" placeholder="Your address..." style="height:200px"></textarea>
       </div>
       </form>
+
+      <div>
+        <span><a href="/" class="fa fa-home home_footer" ></a></span>
+        <span><a href="/cart" class="fa fa-shopping-cart cart_footer" > </a></span>
+        </div>
     </div>
   
 

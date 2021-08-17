@@ -1,4 +1,7 @@
 
+.checkoutbutton a{
+  color: black;
+}
 .checkoutbutton{
   margin-left: 250px;
     margin-bottom: 20px;
@@ -72,6 +75,22 @@
     background-color: #45a049;
   }
 
+  .home_footer
+  {
+    margin-top: 20px;
+    font-size: 60px;
+    margin-right: 250px;
+    margin-left: 260px;
+  }
+
+  
+  
+
+  .cart_footer
+  {
+    font-size: 60px;
+  }
+
   
   
   @media only screen and (max-width: 700px) {
@@ -87,6 +106,20 @@
       resize: vertical;
     }
 
+    .home_footer
+    {
+      font-size: 60px;
+      margin: 10px;
+      margin-right: 100px;
+      margin-left: 60px;
+    }
+  
+    
+  
+    .cart_footer
+    {
+      font-size: 60px;
+    }
     .Name_label{
       margin-left: 00px;
     }

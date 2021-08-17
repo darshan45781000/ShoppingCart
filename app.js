@@ -126,6 +126,19 @@ app.get('/placeorder', (req, res) => {
 })
 })
 
+app.get('/order', (req, res) => {
+    connection.query("select count(*) AS a from carttable",(err, rowss) => {
+        console.log(rowss);
+        console.log(rowss[0].a);
+        let b=rowss[0].a;
+    if (!err) {
+        
+        res.render('order', {  count : b});
+    }     
+       
+})
+})
+
 
 app.post('/delete', (req, res) => {
     let UserId = req.body.UserId;
