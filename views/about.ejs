@@ -26,11 +26,15 @@
     </div>
     <div class="order">
       <div class="order_boarder">
-        <div class="add-to-cart">Add to cart</div>
+        <input type="text" hidden id="id1" value="<%=user.ImageUrl %>">
+        <input type="text" hidden id="id2" value="<%=user.ProductPrice %>">
+        <input type="text" hidden id="id3" value="<%= user.ProductName %>">
+        <input type="text" hidden id="id4" value="<%=user.ProductId %>">
+        <div class="add-to-cart" onclick="Send(document.getElementById('id1'),document.getElementById('id2'),1,document.getElementById('id3'),document.getElementById('id4'))" >Add to cart</div>
       </div>
         <div class="border_menu">
         <span class=" home_footer"><a href="/" class="fa fa-home" ></a></span>
-      <span class="cart_footer"><a href="/cart" class="fa fa-shopping-cart " > </a></span>
+      <span class="cart_footer"><a href="/cart" class="fa fa-shopping-cart " id='lblCartCoun1t' > <%- JSON.stringify(count) %> </a></span>
     </div>
     </div>
     <%}); %>

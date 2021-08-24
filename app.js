@@ -5,10 +5,23 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const session= require('express-session');
 
-
-
-
-var app = express();
+const MemoryStore = require('memorystore')(session)
+const app = express();
+app.set('views', './');
+app.set('view engine', 'ejs');
+app.use(
+    session(
+        {
+            secret: 'This is a secret',
+            cookie: { maxAge: 86400000 },
+            saveUninitialized: true,
+            resave: false,
+            store: new MemoryStore({
+                checkPeriod: 86400000 // prune expired entries every 24h
+            })
+        }
+    )
+);
 app.use(bodyParser.json());
 const port = 3002
 
@@ -56,7 +69,14 @@ app.get('', (req, res) => {
             console.log(rowss[0].a);
             let b=rowss[0].a;
         if (!err) {
-            
+            console.log(req.sessionID);
+        // console.log(req.session);
+        console.log(req.sessionStore);
+
+
+
+
+        
             res.render('html', { user: rows, count : b});
         }
         else {
@@ -79,6 +99,8 @@ app.get('/about/:prdId', (req, res) => {
             console.log(rowss[0].a);
             let b=rowss[0].a;
         if (!err) {
+        console.log("it is a post!");
+            console.log(req.sessionStore.Cart);
             res.render('about', { user: rows, count : b });
         }
         else {
@@ -166,13 +188,16 @@ app.post('/insert', (request, response) => {
     let ProcuctId = request.body.ProductId;
     let CartId= request.body.cartid;
     console.log(CartId);
-    
+   
 
     //let sql = "insert into carttable(UserId,ImageUrl,ProductName,ProductPrice,ProductId,ProductTotalPrice,Quantity) values ('Darshan123','ImageUrl', 'name','price',1,'10','1')";
     let sql = "insert into carttable(CartId,UserId,ImageUrl,ProductName,ProductPrice,ProductId,ProductTotalPrice,Quantity) values (CartId,'Darshan123','" + ImageUrl + "','" + Name + "','" + price + "'," + ProcuctId + ",'" + totalprice + "','" + quantity + "'" + ")";
     connection.query(sql, (err, rows) => {
         if (!err) {
+            request.sessionStore.Cart = { cartname: "omid" }
+            console.log(request.sessionStore);
             response.json({ success: true })
+            console.log(request.sessionStore.Cart);
         }
         else {
             console.log(err);

@@ -51,7 +51,15 @@ function values(a)
 
 function Send(aa,bb,cc,dd,ee)
 {
-    var total=parseInt(bb.value) * parseInt(cc.value);
+    a=aa.value;
+    b=bb.value;
+    c=cc;
+    d=dd.value;
+    e=ee.value;
+   console.log("hi");
+   console.log(aa);
+   console.log("helo");
+    var total=parseInt(bb.value) * parseInt(cc);
     total=total.toString();
     fetch('http://localhost:3002/insert',{
    headers:{
@@ -60,18 +68,18 @@ function Send(aa,bb,cc,dd,ee)
         method:'POST',
         body: JSON.stringify({
             cartid:null,
-            imageurl: aa.value,
-            price: bb.value,
-            quality: cc.value,
+            imageurl: a,
+            price: b,
+            quality: c,
             total: total,
-            Name:dd.value,
-            ProductId: ee.value
+            Name:d,
+            ProductId: e
         })
     }).then((response)=> response.json())
     .then((data)=>{
-     var a1=   document.getElementById("lblCartCount").innerText;
+     var a1=   document.getElementById("lblCartCoun1t").innerText;
      var b=parseInt(a1)+1;
-     document.getElementById("lblCartCount").innerHTML=b.toString();
+     document.getElementById("lblCartCoun1t").innerHTML=b.toString();
         console.log("success");
     })
     .catch((error)=>{
