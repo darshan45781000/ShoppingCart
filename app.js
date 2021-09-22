@@ -3,7 +3,7 @@ const mysql = require("mysql2");
 const path = require("path");
 const express = require("express");
 const bodyParser = require("body-parser");
-const session= require('express-session');
+const session = require('express-session');
 
 const MemoryStore = require('memorystore')(session)
 const app = express();
@@ -13,11 +13,11 @@ app.use(
     session(
         {
             secret: 'This is a secret',
-            cookie: { maxAge: 86400000 },
+            cookie: { maxAge: 864000 },
             saveUninitialized: true,
             resave: false,
             store: new MemoryStore({
-                checkPeriod: 86400000 // prune expired entries every 24h
+                checkPeriod: 864000 // prune expired entries every 24h/100
             })
         }
     )
@@ -64,101 +64,100 @@ app.set('views', path.join(__dirname, '/views'));
 
 app.get('', (req, res) => {
     connection.query("SELECT * from products", (err, rows) => {
-        connection.query("select count(*) AS a from carttable",(err, rowss) => {
+        connection.query("select count(*) AS a from carttable", (err, rowss) => {
             console.log(rowss);
             console.log(rowss[0].a);
-            let b=rowss[0].a;
-        if (!err) {
-            console.log(req.sessionID);
-        // console.log(req.session);
-        console.log(req.sessionStore);
+            let b = rowss[0].a;
+            if (!err) {
+                console.log(req.sessionID);
+                // console.log(req.session);
+                console.log(req.sessionStore);
 
 
 
 
-        
-            res.render('html', { user: rows, count : b});
-        }
-        else {
-            console.log(err);
-        }
-        // console.log(rows);
-    })
+
+                res.render('home', { user: rows, count: b });
+            }
+            else {
+                console.log(err);
+            }
+            // console.log(rows);
+        })
     })
 })
 
-app.get('/about/:prdId', (req, res) => {
+app.get('/product/:prdId', (req, res) => {
     // let a=req.params.id
     // console.log(a);
     //https://stackoverflow.com/questions/25187903/what-do-curly-braces-around-javascript-variable-name-mean
     const { prdId } = req.params;
     let sql = "SELECT * from products where ProductId=" + prdId;
     connection.query(sql, (err, rows) => {
-        connection.query("select count(*) AS a from carttable",(err, rowss) => {
+        connection.query("select count(*) AS a from carttable", (err, rowss) => {
             console.log(rowss);
             console.log(rowss[0].a);
-            let b=rowss[0].a;
-        if (!err) {
-        console.log("it is a post!");
-            console.log(req.sessionStore.Cart);
-            res.render('about', { user: rows, count : b });
-        }
-        else {
-            console.log(err);
-        }
-        //console.log(rows);
-    })
+            let b = rowss[0].a;
+            if (!err) {
+                console.log("it is a post!");
+                console.log(req.sessionStore.Cart);
+                res.render('product', { user: rows, count: b });
+            }
+            else {
+                console.log(err);
+            }
+            //console.log(rows);
+        })
     })
 })
 
 app.get('/cart', (req, res) => {
     connection.query("SELECT * from carttable", (err, rows) => {
-        connection.query("select count(*) AS a from carttable",(err, rowss) => {
+        connection.query("select count(*) AS a from carttable", (err, rowss) => {
             console.log(rows);
-            let b=rowss[0].a;
-            connection.query("select sum(ProductTotalPrice) AS b from carttable",(err,rowsss)=>{
-                let c=rowsss[0].b;
-                if(c==null)
-                {
-                    c=0;
+            let b = rowss[0].a;
+            connection.query("select sum(ProductTotalPrice) AS b from carttable", (err, rowsss) => {
+                let c = rowsss[0].b;
+                if (c == null) {
+                    c = 0;
                 }
-        if (!err) {
-            res.render('cart', { user: rows,count : b, totalcost:c });
-        }
-        else {
-            console.log(err);
-        }
-        // console.log(rows);
-    })
-})
+                if (!err) {
+                    res.render('cart', { user: rows, count: b, totalcost: c });
+                }
+                else {
+                    console.log(err);
+                }
+                // console.log(rows);
+            })
+        })
     })
 })
 
 
 app.get('/placeorder', (req, res) => {
-    connection.query("select count(*) AS a from carttable",(err, rowss) => {
+    connection.query("select count(*) AS a from carttable", (err, rowss) => {
         console.log(rowss);
         console.log(rowss[0].a);
-        let b=rowss[0].a;
-    if (!err) {
-        
-        res.render('placeorder', {  count : b});
-    }     
-       
-})
+        let b = rowss[0].a;
+        if (!err) {
+
+            res.render('placeorder', { count: b });
+        }
+
+    })
 })
 
 app.get('/order', (req, res) => {
-    connection.query("select count(*) AS a from carttable",(err, rowss) => {
+    connection.query("select count(*) AS a from carttable", (err, rowss) => {
         console.log(rowss);
         console.log(rowss[0].a);
-        let b=rowss[0].a;
-    if (!err) {
-        
-        res.render('order', {  count : b});
-    }     
-       
-})
+        let b = rowss[0].a;
+        if (!err) {
+
+            res.render('order', { count: b });
+        }
+
+    })
 })
 
 
@@ -166,9 +165,9 @@ app.post('/delete', (req, res) => {
     let UserId = req.body.UserId;
     let sql = "delete from carttable where CartId=" + UserId;
     connection.query(sql, (err, rows) => {
-       
+
         if (!err) {
-            
+
             res.json({ success: true })
         }
         else {
@@ -176,7 +175,7 @@ app.post('/delete', (req, res) => {
         }
         // console.log(rows);
     })
-    })
+})
 
 
 app.post('/insert', (request, response) => {
@@ -186,9 +185,9 @@ app.post('/insert', (request, response) => {
     let totalprice = request.body.total;
     let Name = request.body.Name;
     let ProcuctId = request.body.ProductId;
-    let CartId= request.body.cartid;
+    let CartId = request.body.cartid;
     console.log(CartId);
-   
+
 
     //let sql = "insert into carttable(UserId,ImageUrl,ProductName,ProductPrice,ProductId,ProductTotalPrice,Quantity) values ('Darshan123','ImageUrl', 'name','price',1,'10','1')";
     let sql = "insert into carttable(CartId,UserId,ImageUrl,ProductName,ProductPrice,ProductId,ProductTotalPrice,Quantity) values (CartId,'Darshan123','" + ImageUrl + "','" + Name + "','" + price + "'," + ProcuctId + ",'" + totalprice + "','" + quantity + "'" + ")";
@@ -213,4 +212,3 @@ app.post('/insert', (request, response) => {
 app.listen(port, () => console.info(`listen on port ${port}`))
 
 
-  

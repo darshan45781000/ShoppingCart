@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="css/home.css">
+<link rel="manifest" href="manifest.json">
+<script src="js/input.js"></script>
+<title>Shopping App </title>
+</head>
+
+<body>
+  <nav class="navbar">
+    <div class="brand-title">BuyIteams</div>
+    <a href="#" class="toggle-button">
+      <span class="bar"></span>
+      <span class="bar"></span>
+      <span class="bar"></span>
+    </a>
+    <div class="navbar-links">
+      <ul>
+        <li><a href="/cart"><i class="fa" style="font-size:24px">&#xf07a;</i> <span class='badge badge-warning'
+              id='cartid1'>
+              <%- JSON.stringify(count) %>
+            </span></a></li>
+        <li><a href="#">Orders</a></li>
+        <li><a href="#">Login</a></li>
+      </ul>
+    </div>
+  </nav>
+
+
+
+
+
+  <div class="container">
+
+    <div class="row">
+      <% user.forEach(function(user){%>
+
+        <div class="card">
+          <a href="<%=" /product/"+ user.ProductId %>">
+            <div class="card-header">
+              <img src="<%=user.ImageUrl %>" id="img1" style="width: 100%; height: 100%;">
+            </div>
+            <div class="card-body">
+              <h4>
+                <%=user.ProductName %>
+              </h4>
+
+            </div>
+          </a>
+        </div>
+
+
+        <%}); %>
+    </div>
+  </div>
+
+
+</body>
+
+</html>
