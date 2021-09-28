@@ -5,7 +5,8 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const session = require('express-session');
 
-const MemoryStore = require('memorystore')(session)
+const MemoryStore = require('memorystore')(session);
+const shoppingCart = require('./shoppingCar.js');
 const app = express();
 app.set('views', './');
 app.set('view engine', 'ejs');
@@ -30,7 +31,7 @@ var connection = mysql.createConnection(
     {
         host: "localhost",
         user: "root",
-        password: "Yoga#9844",
+        password: "Salam",
         database: "shoppingcart",
         multipleStatements: true
 
