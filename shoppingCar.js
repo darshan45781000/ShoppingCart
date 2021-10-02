@@ -15,7 +15,8 @@ function shoppingCart() {
 
     let Cart = {
         length: 0,
-
+        totalNumberOfItems: 0,
+        GrandTotal: 0,
         addItem: function addItem(item) {
             // obj.length is automatically incremented
             // every time an element is added.
@@ -32,7 +33,7 @@ function shoppingCart() {
     //if does not exist
     // Add
 
-    function Upsert(prdId, quantity) {
+    function Upsert(prdId, quantity, price) {
 
         // search array of items in the cart using prdId
 
@@ -40,12 +41,14 @@ function shoppingCart() {
         //Item does not exist in the cart then insert
         if (typeof iFoundTheItemUsingThePrdId !== "undefined") {
 
-            addToCart(prdId, quantity);
+            addToCart(prdId, quantity, price);
+            updateAllTotals()
 
         } else //update
 
         {
-            updateTheCart(prdId, quantity);
+            updateTheCart(prdId, quantity, price);
+            updateAllTotals()
 
         }
 
@@ -60,13 +63,13 @@ function shoppingCart() {
 
     // Adding an item to the cart
 
-    function addToCart(prdId, quantity) {
+    function addToCart(prdId, quantity, price) {
 
         var createdItem = Object.create(item);
         createdItem.ProductId = prdId;
         createdItem.Quantity = quantity;
         //probably use db to fetch price?
-        createdItem.Price = "fetch from db";
+        createdItem.Price = price;
         createdItem.QuantityTimesPrice = quantity * Price;
         Cart.addItem(createdItem);
 
@@ -74,9 +77,9 @@ function shoppingCart() {
 
     // updating the cart
 
-    function updateTheCart(prdId, quantity) {
+    function updateTheCart(prdId, quantity, price) {
 
-        // if the quantity is zero, then delete
+        //  for delete -- if the quantity is zero, then delete
         //https://stackoverflow.com/questions/5767325/how-can-i-remove-a-specific-item-from-an-array
 
         if (quantity === 0) {
@@ -87,7 +90,7 @@ function shoppingCart() {
             } else {
                 const iFoundTheItemUsingThePrdId = Cart.find(item => item.prdId === prdId);
                 iFoundTheItemUsingThePrdId.Quantity = quantity;
-                iFoundTheItemUsingThePrdId.Price = "fetch from db?";
+                iFoundTheItemUsingThePrdId.Price = price;
                 iFoundTheItemUsingThePrdId.QuantityTimesPrice = iFoundTheItemUsingThePrdId.Price.quantity;
 
 
@@ -98,6 +101,18 @@ function shoppingCart() {
 
 
     }
+
+    function updateAllTotals() {
+        Cart.totalNumberOfItems = 0;
+        Cart.GrandTotal = 0;
+        for (let i of Cart) {
+            Cart.totalNumberOfItems = + i.Quantity;
+            Cart.GrandTotal = i.QuantityTimesPrice;
+        }
+
+    }
+
+
 }
 
 module.exports = shoppingCart;

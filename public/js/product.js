@@ -56,7 +56,31 @@ function updateCart() {
     var productPrice = document.getElementById("product-price");
     var productQuantitySelect = document.getElementById("quantity");
     var Quantity = productQuantitySelect.options[productQuantitySelect.selectedIndex].text;
+    var total = Quantity * productPrice;
+    fetch('http://localhost:3002/updateCart', {
+        headers: {
+            'Content-type': 'application/json'
+        },
+        method: 'POST',
+        body: JSON.stringify({
 
+            ProductId: productId,
+            price: productPrice,
+            quality: Quantity,
+            total: total,
+            Name: ''
+
+        })
+    }).then((response) => response.json())
+        .then((data) => {
+            var a1 = document.getElementById("lblCartCoun1t").innerText;
+            var b = parseInt(a1) + 1;
+            document.getElementById("lblCartCoun1t").innerHTML = b.toString();
+            console.log("success");
+        })
+        .catch((error) => {
+            alert(error);
+        });
 
 
 }

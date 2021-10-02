@@ -178,6 +178,11 @@ app.post('/delete', (req, res) => {
     })
 })
 
+app.post('/updateCart', (request, response) => {
+    request.Cart = Object.create(shoppingCart.Cart);
+
+
+})
 
 app.post('/insert', (request, response) => {
     let ImageUrl = request.body.imageurl;
