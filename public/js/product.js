@@ -50,8 +50,6 @@ function values(a) {
 
 function updateCart() {
 
-
-
     var productId = document.getElementById("product-id");
     var productPrice = document.getElementById("product-price");
     var productQuantitySelect = document.getElementById("quantity");
@@ -64,18 +62,14 @@ function updateCart() {
         method: 'POST',
         body: JSON.stringify({
 
-            ProductId: productId,
+            productId: productId,
             price: productPrice,
             quality: Quantity,
-            total: total,
-            Name: ''
-
+            total: total
         })
     }).then((response) => response.json())
         .then((data) => {
-            var a1 = document.getElementById("lblCartCoun1t").innerText;
-            var b = parseInt(a1) + 1;
-            document.getElementById("lblCartCoun1t").innerHTML = b.toString();
+
             console.log("success");
         })
         .catch((error) => {

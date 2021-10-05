@@ -179,9 +179,11 @@ app.post('/delete', (req, res) => {
 })
 
 app.post('/updateCart', (request, response) => {
-    request.Cart = Object.create(shoppingCart.Cart);
-
-
+    if (typeof request.sessionStore.Cart != "undefined") {
+        request.Cart = Object.create(shoppingCart.Cart);
+    } else {
+        request.sessionStore.Cart.Upsert(request.body.productId, request.body.quality, request.body.price);
+    }
 })
 
 app.post('/insert', (request, response) => {

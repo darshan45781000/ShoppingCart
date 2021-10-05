@@ -68,7 +68,6 @@ function shoppingCart() {
         var createdItem = Object.create(item);
         createdItem.ProductId = prdId;
         createdItem.Quantity = quantity;
-        //probably use db to fetch price?
         createdItem.Price = price;
         createdItem.QuantityTimesPrice = quantity * Price;
         Cart.addItem(createdItem);
@@ -87,7 +86,9 @@ function shoppingCart() {
             const index = Cart.indexOf(Cart.find(item => item.prdId === prdId));
             if (index > -1) {
                 Cart.splice(index, 1);
-            } else {
+            }
+            //Update
+            else {
                 const iFoundTheItemUsingThePrdId = Cart.find(item => item.prdId === prdId);
                 iFoundTheItemUsingThePrdId.Quantity = quantity;
                 iFoundTheItemUsingThePrdId.Price = price;
