@@ -17,59 +17,58 @@
 
 
   <div class="container">
-    <% user.forEach(function(user){%>
-      <div class="image">
-        <div class="grid-box"><img src="<%=" /" + user.ImageUrl%>" /></div>
-      </div>
-      <div class="description">
-        <%= user.ProductDescription %>
-          <div>
-            <br>
-            Quantitiy: <select style="font-size: 16px;" id="quantity">
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
-              <option value="6">6</option>
-              <option value="7">7</option>
-              <option value="8">8</option>
-              <option value="9">9</option>
-              <option value="10">10</option>
-              <option value="11">11</option>
-              <option value="12">12</option>
-              <option value="13">13</option>
-              <option value="14">14</option>
-              <option value="15">15</option>
-              <option value="16">16</option>
-              <option value="17">17</option>
-              <option value="18">18</option>
-              <option value="19">19</option>
-              <option value="20">20</option>
-            </select>
-          </div>
-      </div>
-      <div class="order">
-        <div class="order_boarder">
-          <input type="text" hidden id="image-url" value="<%=user.ImageUrl %>">
-          <input type="text" hidden id="product-price" value="<%=user.ProductPrice %>">
-          <input type="text" hidden id="product-name" value="<%= user.ProductName %>">
-          <input type="text" hidden id="product-id" value="<%=user.ProductId %>">
-          <div class="add-to-cart" onclick="updateCart()">Add to cart</div>
-        </div>
-        <div class="border_menu">
-          <span class=" home_footer"><a href="/" class="fa fa-home"></a></span>
-          <span class="cart_footer"><a href="/cart" class="fa fa-shopping-cart " id='lblCartCoun1t'>
-              <%- JSON.stringify(count) %>
-            </a></span>
-        </div>
-      </div>
-      <%}); %>
-
-
+    <div class="image">
+      <div class="grid-box"><img src="<%=" /" + product.ImageUrl%>" /></div>
+    </div>
+    <div class="description">
+      <%= product.ProductDescription %>
         <div>
-
+          <br>
+          Quantitiy: <select style="font-size: 16px;" id="quantity">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+            <option value="11">11</option>
+            <option value="12">12</option>
+            <option value="13">13</option>
+            <option value="14">14</option>
+            <option value="15">15</option>
+            <option value="16">16</option>
+            <option value="17">17</option>
+            <option value="18">18</option>
+            <option value="19">19</option>
+            <option value="20">20</option>
+          </select>
         </div>
+    </div>
+    <div class="order">
+      <div class="order_boarder">
+        <input type="text" hidden id="image-url" value="<%=product.ImageUrl %>">
+        <input type="text" hidden id="product-price" value="<%=product.ProductPrice %>">
+        <input type="text" hidden id="product-name" value="<%= product.ProductName %>">
+        <input type="text" hidden id="product-id" value="<%=product.ProductId %>">
+        <div class="add-to-cart" onclick="updateCart()">Add to cart</div>
+      </div>
+      <div class="border_menu">
+        <span class=" home_footer"><a href="/" class="fa fa-home"></a></span>
+        <span class="cart_footer"><a href="/cart" class="fa fa-shopping-cart " id='lblCartCoun1t'>
+            <%- JSON.stringify(itemsInCart) %>
+          </a></span>
+      </div>
+    </div>
+
+
+
+    <div>
+
+    </div>
 
 
 

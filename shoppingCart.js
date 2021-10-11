@@ -1,6 +1,6 @@
 // this code can be put in server side
 //
-function shoppingCart() {
+var shoppingCart = function () {
     // Defenition of an item
     var item = {
 
@@ -37,18 +37,18 @@ function shoppingCart() {
 
         // search array of items in the cart using prdId
 
-        const iFoundTheItemUsingThePrdId = Cart.find(item => item.prdId === prdId);
+        const iFoundTheItemUsingThePrdId = this.find(item => item.prdId === prdId);
         //Item does not exist in the cart then insert
         if (typeof iFoundTheItemUsingThePrdId !== "undefined") {
 
             addToCart(prdId, quantity, price);
-            updateAllTotals()
+            updateAllTotals();
 
         } else //update
 
         {
             updateTheCart(prdId, quantity, price);
-            updateAllTotals()
+            updateAllTotals();
 
         }
 
@@ -70,7 +70,7 @@ function shoppingCart() {
         createdItem.Quantity = quantity;
         createdItem.Price = price;
         createdItem.QuantityTimesPrice = quantity * Price;
-        Cart.addItem(createdItem);
+        this.addItem(createdItem);
 
     }
 
@@ -83,13 +83,13 @@ function shoppingCart() {
 
         if (quantity === 0) {
 
-            const index = Cart.indexOf(Cart.find(item => item.prdId === prdId));
+            const index = this.indexOf(this.find(item => item.prdId === prdId));
             if (index > -1) {
-                Cart.splice(index, 1);
+                this.splice(index, 1);
             }
             //Update
             else {
-                const iFoundTheItemUsingThePrdId = Cart.find(item => item.prdId === prdId);
+                const iFoundTheItemUsingThePrdId = this.find(item => item.prdId === prdId);
                 iFoundTheItemUsingThePrdId.Quantity = quantity;
                 iFoundTheItemUsingThePrdId.Price = price;
                 iFoundTheItemUsingThePrdId.QuantityTimesPrice = iFoundTheItemUsingThePrdId.Price.quantity;
@@ -104,17 +104,22 @@ function shoppingCart() {
     }
 
     function updateAllTotals() {
-        Cart.totalNumberOfItems = 0;
-        Cart.GrandTotal = 0;
-        for (let i of Cart) {
-            Cart.totalNumberOfItems = + i.Quantity;
-            Cart.GrandTotal = i.QuantityTimesPrice;
+        this.totalNumberOfItems = 0;
+        this.GrandTotal = 0;
+        for (let i of this) {
+            this.totalNumberOfItems = + i.Quantity;
+            this.GrandTotal = i.QuantityTimesPrice;
         }
 
     }
-
-
-}
+    Cart.Upsert = Upsert;
+    Cart.addToCart = addToCart;
+    Cart.updateTheCart = updateTheCart;
+    Cart.updateAllTotals = updateAllTotals;
+    return {
+        Cart: Cart
+    }
+}();
 
 module.exports = shoppingCart;
 

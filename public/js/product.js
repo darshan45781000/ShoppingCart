@@ -50,8 +50,8 @@ function values(a) {
 
 function updateCart() {
 
-    var productId = document.getElementById("product-id");
-    var productPrice = document.getElementById("product-price");
+    var productId = document.getElementById("product-id").value;
+    var productPrice = document.getElementById("product-price").value;
     var productQuantitySelect = document.getElementById("quantity");
     var Quantity = productQuantitySelect.options[productQuantitySelect.selectedIndex].text;
     var total = Quantity * productPrice;
@@ -63,9 +63,8 @@ function updateCart() {
         body: JSON.stringify({
 
             productId: productId,
-            price: productPrice,
-            quality: Quantity,
-            total: total
+            price: productPrice.replace('$', ''),
+            quality: Quantity
         })
     }).then((response) => response.json())
         .then((data) => {

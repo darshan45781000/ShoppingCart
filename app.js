@@ -6,7 +6,8 @@ const bodyParser = require("body-parser");
 const session = require('express-session');
 
 const MemoryStore = require('memorystore')(session);
-const shoppingCart = require('./shoppingCar.js');
+//I was not able to make this exrernal moudle to work
+//const shoppingCart = require('./shoppingCart');
 const app = express();
 app.set('views', './');
 app.set('view engine', 'ejs');
@@ -25,7 +26,135 @@ app.use(
 );
 app.use(bodyParser.json());
 const port = 3002
+/////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////
+////////////////// Cart Object Defination Starts here ///////////////
+var item = {
 
+    ProductId: 0,
+    Price: 0,
+    Quantity: 0,
+    QuantityTimesPrice: 0 //this can be drived from Price* Quantity
+}
+
+
+// empty cart, which will contian array of items, see notes to undrestand that this cart object will work as array of objects
+
+let Cart = {
+    length: 0,
+    totalNumberOfItems: 0,
+    GrandTotal: 0,
+    addItem: function addItem(item) {
+        // obj.length is automatically incremented
+        // every time an element is added.
+        [].push.call(this, item)
+    },
+    find: function find(item) {
+        //adding array.find
+        [].find.call(this, item)
+    }
+}
+Cart.Upsert = Upsert;
+Cart.addToCart = addToCart;
+Cart.updateTheCart = updateTheCart;
+Cart.updateAllTotals = updateAllTotals;
+
+// when user hit add item(+) or removes an item(-) or selects a quantity, the client shoud send (ProductId and quantity to the server), 
+// so server can creat an item and add it/remove it/ or update the cart.
+
+//first search the cart to see if the item exist
+// Update
+//if does not exist
+// Add
+
+function Upsert(prdId, quantity, price) {
+
+    // search array of items in the cart using prdId
+    var test = this;
+    const iFoundTheItemUsingThePrdId = this.find(item => item.prdId === prdId);
+    //Item does not exist in the cart then insert
+    if (typeof iFoundTheItemUsingThePrdId === "undefined") {
+
+        addToCart(prdId, quantity, price);
+        updateAllTotals();
+
+    } else //update
+
+    {
+        updateTheCart(prdId, quantity, price);
+        updateAllTotals();
+
+    }
+
+
+}
+
+
+
+
+
+
+
+// Adding an item to the cart
+
+function addToCart(prdId, quantity, price) {
+
+    var createdItem = Object.create(item);
+    createdItem.ProductId = prdId;
+    createdItem.Quantity = quantity;
+    createdItem.Price = price;
+    createdItem.QuantityTimesPrice = quantity * price;
+    this.addItem(createdItem);
+
+}
+
+// updating the cart
+
+function updateTheCart(prdId, quantity, price) {
+
+    //  for delete -- if the quantity is zero, then delete
+    //https://stackoverflow.com/questions/5767325/how-can-i-remove-a-specific-item-from-an-array
+
+    if (quantity === 0) {
+
+        const index = this.indexOf(this.find(item => item.prdId === prdId));
+        if (index > -1) {
+            this.splice(index, 1);
+        }
+        //Update
+        else {
+            const iFoundTheItemUsingThePrdId = this.find(item => item.prdId === prdId);
+            iFoundTheItemUsingThePrdId.Quantity = quantity;
+            iFoundTheItemUsingThePrdId.Price = price;
+            iFoundTheItemUsingThePrdId.QuantityTimesPrice = iFoundTheItemUsingThePrdId.Price.quantity;
+
+
+        }
+
+    }
+
+
+
+}
+
+function updateAllTotals() {
+    this.totalNumberOfItems = 0;
+    this.GrandTotal = 0;
+    for (let i of this) {
+        this.totalNumberOfItems = + i.Quantity;
+        this.GrandTotal = i.QuantityTimesPrice;
+    }
+
+}
+
+
+/////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////
+////////////////// Cart Object Defination Ends here ///////////////
 
 var connection = mysql.createConnection(
     {
@@ -95,21 +224,51 @@ app.get('/product/:prdId', (req, res) => {
     const { prdId } = req.params;
     let sql = "SELECT * from products where ProductId=" + prdId;
     connection.query(sql, (err, rows) => {
-        connection.query("select count(*) AS a from carttable", (err, rowss) => {
-            console.log(rowss);
-            console.log(rowss[0].a);
-            let b = rowss[0].a;
-            if (!err) {
-                console.log("it is a post!");
-                console.log(req.sessionStore.Cart);
-                res.render('product', { user: rows, count: b });
+
+
+        if (!err) {
+            if (typeof req.sessionStore.Cart != "undefined") {
+
+                res.render('product', { product: rows, itemsInCart: request.sessionStore.Cart.totalNumberOfItems });
+
             }
             else {
-                console.log(err);
+
+                res.render('product', { product: rows[0], itemsInCart: 0 });
+
             }
-            //console.log(rows);
-        })
+
+
+        }
+        else {
+            console.log(err);
+        }
+
+
     })
+
+
+
+
+    // let sql = "SELECT * from products where ProductId=" + prdId;
+    // connection.query(sql, (err, rows) => {
+    //     connection.query("select count(*) AS a from carttable", (err, rowss) => {
+    //         console.log(rowss);
+    //         console.log(rowss[0].a);
+    //         let b = rowss[0].a;
+    //         if (!err) {
+    //             console.log("it is a post!");
+    //             console.log(req.sessionStore.Cart);
+    //             res.render('product', { user: rows, count: b });
+    //         }
+    //         else {
+    //             console.log(err);
+    //         }
+
+    //     })
+    // })
+
+
 })
 
 app.get('/cart', (req, res) => {
@@ -179,41 +338,46 @@ app.post('/delete', (req, res) => {
 })
 
 app.post('/updateCart', (request, response) => {
-    if (typeof request.sessionStore.Cart != "undefined") {
-        request.Cart = Object.create(shoppingCart.Cart);
-    } else {
+
+    if (typeof request.sessionStore.Cart === "undefined") {
+        request.sessionStore.Cart = Object.create(Cart);
         request.sessionStore.Cart.Upsert(request.body.productId, request.body.quality, request.body.price);
+    }
+    else {
+
+        request.sessionStore.Cart.Upsert(request.body.productId, request.body.quality, request.body.price);
+
     }
 })
 
-app.post('/insert', (request, response) => {
-    let ImageUrl = request.body.imageurl;
-    let price = request.body.price;
-    let quantity = request.body.quality;
-    let totalprice = request.body.total;
-    let Name = request.body.Name;
-    let ProcuctId = request.body.ProductId;
-    let CartId = request.body.cartid;
-    console.log(CartId);
+// app.post('/insert', (request, response) => {
+//     let ImageUrl = request.body.imageurl;
+//     let price = request.body.price;
+//     let quantity = request.body.quality;
+//     let totalprice = request.body.total;
+//     let Name = request.body.Name;
+//     let ProcuctId = request.body.ProductId;
+//     let CartId = request.body.cartid;
+//     console.log(CartId);
 
 
-    //let sql = "insert into carttable(UserId,ImageUrl,ProductName,ProductPrice,ProductId,ProductTotalPrice,Quantity) values ('Darshan123','ImageUrl', 'name','price',1,'10','1')";
-    let sql = "insert into carttable(CartId,UserId,ImageUrl,ProductName,ProductPrice,ProductId,ProductTotalPrice,Quantity) values (CartId,'Darshan123','" + ImageUrl + "','" + Name + "','" + price + "'," + ProcuctId + ",'" + totalprice + "','" + quantity + "'" + ")";
-    connection.query(sql, (err, rows) => {
-        if (!err) {
-            request.sessionStore.Cart = { cartname: "omid" }
-            console.log(request.sessionStore);
-            response.json({ success: true })
-            console.log(request.sessionStore.Cart);
-        }
-        else {
-            console.log(err);
-        }
-    })
-    // res.render('cart')
+//     //let sql = "insert into carttable(UserId,ImageUrl,ProductName,ProductPrice,ProductId,ProductTotalPrice,Quantity) values ('Darshan123','ImageUrl', 'name','price',1,'10','1')";
+//     let sql = "insert into carttable(CartId,UserId,ImageUrl,ProductName,ProductPrice,ProductId,ProductTotalPrice,Quantity) values (CartId,'Darshan123','" + ImageUrl + "','" + Name + "','" + price + "'," + ProcuctId + ",'" + totalprice + "','" + quantity + "'" + ")";
+//     connection.query(sql, (err, rows) => {
+//         if (!err) {
+//             request.sessionStore.Cart = { cartname: "omid" }
+//             console.log(request.sessionStore);
+//             response.json({ success: true })
+//             console.log(request.sessionStore.Cart);
+//         }
+//         else {
+//             console.log(err);
+//         }
+//     })
 
 
-})
+
+// })
 
 
 //listen on port 3000
