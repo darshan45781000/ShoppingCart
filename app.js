@@ -77,14 +77,14 @@ function Upsert(prdId, quantity, price) {
     //Item does not exist in the cart then insert
     if (typeof iFoundTheItemUsingThePrdId === "undefined") {
 
-        addToCart(prdId, quantity, price);
-        updateAllTotals();
+        addToCart(prdId, quantity, price, this);
+        updateAllTotals(this);
 
     } else //update
 
     {
-        updateTheCart(prdId, quantity, price);
-        updateAllTotals();
+        updateTheCart(prdId, quantity, price, this);
+        updateAllTotals(this);
 
     }
 
@@ -99,33 +99,34 @@ function Upsert(prdId, quantity, price) {
 
 // Adding an item to the cart
 
-function addToCart(prdId, quantity, price) {
+function addToCart(prdId, quantity, price, cart) {
 
     var createdItem = Object.create(item);
     createdItem.ProductId = prdId;
     createdItem.Quantity = quantity;
     createdItem.Price = price;
     createdItem.QuantityTimesPrice = quantity * price;
-    this.addItem(createdItem);
+    var test = cart;
+    cart.addItem(createdItem);
 
 }
 
 // updating the cart
 
-function updateTheCart(prdId, quantity, price) {
+function updateTheCart(prdId, quantity, price, cart) {
 
     //  for delete -- if the quantity is zero, then delete
     //https://stackoverflow.com/questions/5767325/how-can-i-remove-a-specific-item-from-an-array
 
     if (quantity === 0) {
 
-        const index = this.indexOf(this.find(item => item.prdId === prdId));
+        const index = cart.indexOf(cart.find(item => item.prdId === prdId));
         if (index > -1) {
-            this.splice(index, 1);
+            cart.splice(index, 1);
         }
         //Update
         else {
-            const iFoundTheItemUsingThePrdId = this.find(item => item.prdId === prdId);
+            const iFoundTheItemUsingThePrdId = cart.find(item => item.prdId === prdId);
             iFoundTheItemUsingThePrdId.Quantity = quantity;
             iFoundTheItemUsingThePrdId.Price = price;
             iFoundTheItemUsingThePrdId.QuantityTimesPrice = iFoundTheItemUsingThePrdId.Price.quantity;
@@ -139,13 +140,16 @@ function updateTheCart(prdId, quantity, price) {
 
 }
 
-function updateAllTotals() {
-    this.totalNumberOfItems = 0;
-    this.GrandTotal = 0;
-    for (let i of this) {
-        this.totalNumberOfItems = + i.Quantity;
-        this.GrandTotal = i.QuantityTimesPrice;
+function updateAllTotals(cart) {
+    cart.totalNumberOfItems = 0;
+    cart.GrandTotal = 0;
+    for (var itemIndex = 0; itemIndex < cart.length; itemIndex++) {
+
+        cart.totalNumberOfItems = + cart[itemIndex].Quantity;
+        cart.GrandTotal = cart[itemIndex].QuantityTimesPrice;
+
     }
+
 
 }
 
