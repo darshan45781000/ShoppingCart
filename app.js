@@ -50,16 +50,13 @@ let Cart = {
         // obj.length is automatically incremented
         // every time an element is added.
         [].push.call(this, item)
-    },
-    find: function find(item) {
-        //adding array.find
-        [].find.call(this, item)
     }
 }
 Cart.Upsert = Upsert;
 Cart.addToCart = addToCart;
 Cart.updateTheCart = updateTheCart;
 Cart.updateAllTotals = updateAllTotals;
+Cart.FindItemInCartById = FindItemInCartById;
 
 // when user hit add item(+) or removes an item(-) or selects a quantity, the client shoud send (ProductId and quantity to the server), 
 // so server can creat an item and add it/remove it/ or update the cart.
@@ -73,7 +70,8 @@ function Upsert(prdId, quantity, price) {
 
     // search array of items in the cart using prdId
     var test = this;
-    const iFoundTheItemUsingThePrdId = this.find(item => item.prdId === prdId);
+    const iFoundTheItemUsingThePrdId = this.FindItemInCartById(this, prdId);
+
     //Item does not exist in the cart then insert
     if (typeof iFoundTheItemUsingThePrdId === "undefined") {
 
@@ -153,6 +151,20 @@ function updateAllTotals(cart) {
 
 }
 
+function FindItemInCartById(cart, prductId) {
+
+    for (var itemIndex = 0; itemIndex < cart.length; itemIndex++) {
+
+        if (cart[itemIndex].ProductId == prductId) {
+
+            return 1;
+        }
+
+
+    }
+
+
+}
 
 /////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////
