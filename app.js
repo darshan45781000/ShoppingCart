@@ -245,7 +245,7 @@ app.get('/product/:prdId', (req, res) => {
         if (!err) {
             if (typeof req.sessionStore.Cart != "undefined") {
 
-                res.render('product', { product: rows, itemsInCart: request.sessionStore.Cart.totalNumberOfItems });
+                res.render('product', { product: rows[0], itemsInCart: request.sessionStore.Cart.totalNumberOfItems });
 
             }
             else {
@@ -364,6 +364,7 @@ app.post('/updateCart', (request, response) => {
         request.sessionStore.Cart.Upsert(request.body.productId, request.body.quality, request.body.price);
 
     }
+    response.json({ cartNumber: request.sessionStore.Cart.GrandTotal });
 })
 
 // app.post('/insert', (request, response) => {

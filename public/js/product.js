@@ -70,6 +70,7 @@ function updateCart() {
         .then((data) => {
 
             console.log("success");
+            document.getElementById("lblCartCoun1t").textContent = data.cartNumber;
         })
         .catch((error) => {
             alert(error);
