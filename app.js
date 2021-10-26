@@ -56,7 +56,8 @@ Cart.Upsert = Upsert;
 Cart.addToCart = addToCart;
 Cart.updateTheCart = updateTheCart;
 Cart.updateAllTotals = updateAllTotals;
-Cart.FindItemInCartById = FindItemInCartById;
+Cart.IfItemExistInCart = IfItemExistInCart;
+Cart.findItemInCartByIdThenRerunIndex = findItemInCartByIdThenRerunIndex;
 
 // when user hit add item(+) or removes an item(-) or selects a quantity, the client shoud send (ProductId and quantity to the server), 
 // so server can creat an item and add it/remove it/ or update the cart.
@@ -70,7 +71,7 @@ function Upsert(prdId, quantity, price) {
 
     // search array of items in the cart using prdId
     var test = this;
-    const iFoundTheItemUsingThePrdId = this.FindItemInCartById(this, prdId);
+    const iFoundTheItemUsingThePrdId = this.IfItemExistInCart(this, prdId);
 
     //Item does not exist in the cart then insert
     if (typeof iFoundTheItemUsingThePrdId === "undefined") {
@@ -118,21 +119,22 @@ function updateTheCart(prdId, quantity, price, cart) {
 
     if (quantity === 0) {
 
-        const index = cart.indexOf(cart.find(item => item.prdId === prdId));
+        const index = cart.findItemInCartByIdThenRerunIndex(cart, prdId);
         if (index > -1) {
             cart.splice(index, 1);
         }
-        //Update
-        else {
-            const iFoundTheItemUsingThePrdId = cart.find(item => item.prdId === prdId);
-            iFoundTheItemUsingThePrdId.Quantity = quantity;
-            iFoundTheItemUsingThePrdId.Price = price;
-            iFoundTheItemUsingThePrdId.QuantityTimesPrice = iFoundTheItemUsingThePrdId.Price.quantity;
-
-
-        }
 
     }
+    //Update
+    else {
+        const iFoundTheItemUsingThePrdId = cart.findItemInCartByIdThenRerunIndex(cart, prdId);
+        cart[iFoundTheItemUsingThePrdId].Quantity = quantity;
+        cart[iFoundTheItemUsingThePrdId].Price = price;
+        cart[iFoundTheItemUsingThePrdId].QuantityTimesPrice = cart[iFoundTheItemUsingThePrdId].Price * cart[iFoundTheItemUsingThePrdId].quantity;
+
+
+    }
+
 
 
 
@@ -151,7 +153,7 @@ function updateAllTotals(cart) {
 
 }
 
-function FindItemInCartById(cart, prductId) {
+function IfItemExistInCart(cart, prductId) {
 
     for (var itemIndex = 0; itemIndex < cart.length; itemIndex++) {
 
@@ -159,10 +161,19 @@ function FindItemInCartById(cart, prductId) {
 
             return 1;
         }
-
-
     }
+}
 
+function findItemInCartByIdThenRerunIndex(cart, prductId) {
+
+    for (var itemIndex = 0; itemIndex < cart.length; itemIndex++) {
+
+        if (cart[itemIndex].ProductId == prductId) {
+
+            return itemIndex;
+        }
+        return -1;
+    }
 
 }
 
@@ -343,7 +354,7 @@ app.post('/updateCart', (request, response) => {
         request.sessionStore.Cart.Upsert(request.body.productId, request.body.quality, request.body.price);
 
     }
-    response.json({ cartNumber: request.sessionStore.Cart.GrandTotal });
+    response.json({ cartNumber: request.sessionStore.Cart.totalNumberOfItems });
 })
 
 // app.post('/insert', (request, response) => {
