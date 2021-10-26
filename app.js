@@ -234,8 +234,8 @@ app.get('', (req, res) => {
 })
 
 app.get('/product/:prdId', (req, res) => {
-    // let a=req.params.id
-    // console.log(a);
+    var result;
+    var itemsInCart;
     //https://stackoverflow.com/questions/25187903/what-do-curly-braces-around-javascript-variable-name-mean
     const { prdId } = req.params;
     let sql = "SELECT * from products where ProductId=" + prdId;
@@ -243,46 +243,25 @@ app.get('/product/:prdId', (req, res) => {
 
 
         if (!err) {
-            if (typeof req.sessionStore.Cart != "undefined") {
-
-                res.render('product', { product: rows[0], itemsInCart: request.sessionStore.Cart.totalNumberOfItems });
-
-            }
-            else {
-
-                res.render('product', { product: rows[0], itemsInCart: 0 });
-
-            }
-
-
+            result = rows;
         }
         else {
             console.log(err);
         }
+        if (typeof req.sessionStore.Cart != "undefined") {
 
+
+            res.render('product', { product: result[0], itemsInCart: req.sessionStore.Cart.totalNumberOfItems });
+
+        }
+        else {
+
+            res.render('product', { product: result[0], itemsInCart: 0 });
+
+        }
 
     })
 
-
-
-
-    // let sql = "SELECT * from products where ProductId=" + prdId;
-    // connection.query(sql, (err, rows) => {
-    //     connection.query("select count(*) AS a from carttable", (err, rowss) => {
-    //         console.log(rowss);
-    //         console.log(rowss[0].a);
-    //         let b = rowss[0].a;
-    //         if (!err) {
-    //             console.log("it is a post!");
-    //             console.log(req.sessionStore.Cart);
-    //             res.render('product', { user: rows, count: b });
-    //         }
-    //         else {
-    //             console.log(err);
-    //         }
-
-    //     })
-    // })
 
 
 })
