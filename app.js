@@ -34,6 +34,8 @@ const port = 3002
 var item = {
 
     ProductId: 0,
+    ProductName: "",
+    ImageUrl: "",
     Price: 0,
     Quantity: 0,
     QuantityTimesPrice: 0 //this can be drived from Price* Quantity
@@ -67,16 +69,15 @@ Cart.findItemInCartByIdThenRerunIndex = findItemInCartByIdThenRerunIndex;
 //if does not exist
 // Add
 
-function Upsert(prdId, quantity, price) {
+function Upsert(prdId, quantity, price, productName, imageUrl) {
 
     // search array of items in the cart using prdId
-    var test = this;
     const iFoundTheItemUsingThePrdId = this.IfItemExistInCart(this, prdId);
 
     //Item does not exist in the cart then insert
     if (typeof iFoundTheItemUsingThePrdId === "undefined") {
 
-        addToCart(prdId, quantity, price, this);
+        addToCart(prdId, quantity, price, productName, imageUrl, this);
         updateAllTotals(this);
 
     } else //update
@@ -98,14 +99,15 @@ function Upsert(prdId, quantity, price) {
 
 // Adding an item to the cart
 
-function addToCart(prdId, quantity, price, cart) {
+function addToCart(prdId, quantity, price, productName, imageUrl, cart) {
 
     var createdItem = Object.create(item);
     createdItem.ProductId = prdId;
+    createdItem.ProductName = productName;
+    createdItem.ImageUrl = imageUrl;
     createdItem.Quantity = quantity;
     createdItem.Price = price;
     createdItem.QuantityTimesPrice = quantity * price;
-    var test = cart;
     cart.addItem(createdItem);
 
 }
@@ -278,27 +280,44 @@ app.get('/product/:prdId', (req, res) => {
 })
 
 app.get('/cart', (req, res) => {
-    connection.query("SELECT * from carttable", (err, rows) => {
-        connection.query("select count(*) AS a from carttable", (err, rowss) => {
-            console.log(rows);
-            let b = rowss[0].a;
-            connection.query("select sum(ProductTotalPrice) AS b from carttable", (err, rowsss) => {
-                let c = rowsss[0].b;
-                if (c == null) {
-                    c = 0;
-                }
-                if (!err) {
-                    res.render('cart', { user: rows, count: b, totalcost: c });
-                }
-                else {
-                    console.log(err);
-                }
-                // console.log(rows);
-            })
-        })
-    })
-})
 
+    if (req.sessionStore.Cart === "undefined") {
+        res.render('cart', { row: null, count: 0, totalcost: 0 });
+    }
+    else {
+        var cart = req.sessionStore.Cart;
+        var rows = [];
+        for (var itemIndex = 0; itemIndex < cart.length; itemIndex++) {
+
+            rows.push(cart[itemIndex]);
+        }
+        res.render('cart', { user: rows, count: cart.totalNumberOfItems, totalcost: cart.GrandTotal });
+
+    }
+
+}
+
+    // connection.query("SELECT * from carttable", (err, rows) => {
+    // connection.query("select count(*) AS a from carttable", (err, rowss) => {
+    //     console.log(rows);
+    //     let b = rowss[0].a;
+    //     connection.query("select sum(ProductTotalPrice) AS b from carttable", (err, rowsss) => {
+    //         let c = rowsss[0].b;
+    //         if (c == null) {
+    //             c = 0;
+    //         }
+    //         if (!err) {
+    //             res.render('cart', { user: rows, count: b, totalcost: c });
+    //         }
+    //         else {
+    //             console.log(err);
+    //         }
+    // console.log(rows);
+    //     })
+    // })
+    //})
+    //})
+)
 
 app.get('/placeorder', (req, res) => {
     connection.query("select count(*) AS a from carttable", (err, rowss) => {
@@ -347,11 +366,11 @@ app.post('/updateCart', (request, response) => {
 
     if (typeof request.sessionStore.Cart === "undefined") {
         request.sessionStore.Cart = Object.create(Cart);
-        request.sessionStore.Cart.Upsert(request.body.productId, request.body.quality, request.body.price);
+        request.sessionStore.Cart.Upsert(request.body.productId, request.body.quality, request.body.price, request.body.productName, request.body.imageUrl);
     }
     else {
 
-        request.sessionStore.Cart.Upsert(request.body.productId, request.body.quality, request.body.price);
+        request.sessionStore.Cart.Upsert(request.body.productId, request.body.quality, request.body.price, request.body.productName, request.body.imageUrl);
 
     }
     response.json({ cartNumber: request.sessionStore.Cart.totalNumberOfItems });
