@@ -8,7 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="css/cart.css">
   <link rel="stylesheet" href="/css/home.css">
-  <script src="js/input.js"></script>
+  <script src="js/cart.js"></script>
   <title>Cart</title>
 
 </head>
@@ -26,67 +26,74 @@
           <button class="checkoutbutton"><a href="/placeorder">Proceed to checkout</a></button>
         </div>
       </div>
-      <% user.forEach(function(user){%>
+      <% if(user !=null) {%>
+        <% user.forEach(function(user){%>
 
-        <div class="basket-product">
-          <div class="item">
-            <div class="product-image">
-              <img src="<%=user.ImageUrl %>" alt="Placholder Image 2" class="product-frame">
+          <div class="basket-product">
+            <div class="item">
+              <div class="product-image">
+                <img src="<%=user.ImageUrl %>" alt="Placholder Image 2" class="product-frame">
+              </div>
+              <div class="product-details">
+                <h1 class="discription">
+                  <%=user.ProductName %>
+                </h1>
+                <h2 class="priceh1">
+                  <bold>
+                    <%="$"+ user.Price %>
+                  </bold>
+                </h2>
+                <input type="text" hidden value="<%=user.ProductId %>" id="ProductId">
+
+              </div>
             </div>
-            <div class="product-details">
-              <h1 class="discription">
-                <%=user.ProductName %>
-              </h1>
-              <h2 class="priceh1">
-                <bold>
-                  <%="$"+ user.Price %>
-                </bold>
-              </h2>
-              <input type="text" hidden value="<%=user.ProductId %>" id="ProductId">
+
+            <div class="quantity"> Quantity :
+              <select class="Q1" name="Quantity" id="Quantity">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+                <option value="13">13</option>
+                <option value="14">14</option>
+                <option value="15">15</option>
+                <option value="16">16</option>
+                <option value="17">17</option>
+                <option value="18">18</option>
+                <option value="19">19</option>
+                <option value="20">20</option>
+                <option value="<%=user.Price %>" selected>
+                  <%=user.Quantity %>
+                </option>
+              </select>
 
             </div>
+            <button class="button1" onclick="deleteItemFromCart(`<%=user.ProductId %>`)"><a
+                href="/cart">Delete</a></button>
+
           </div>
 
-          <div class="quantity"> Quantity :
-            <select class="Q1" name="Quantity" id="Quantity">
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
-              <option value="6">6</option>
-              <option value="7">7</option>
-              <option value="8">8</option>
-              <option value="9">9</option>
-              <option value="10">10</option>
-              <option value="11">11</option>
-              <option value="12">12</option>
-              <option value="13">13</option>
-              <option value="14">14</option>
-              <option value="15">15</option>
-              <option value="16">16</option>
-              <option value="17">17</option>
-              <option value="18">18</option>
-              <option value="19">19</option>
-              <option value="20">20</option>
-              <option value="<%=user.Price %>" selected>
-                <%=user.Quantity %>
-              </option>
-            </select>
-
-          </div>
-          <button class="button1" onclick="values(`<%=user.ProductId %>`)"><a href="/cart">Delete</a></button>
-
-        </div>
-
-        <%}); %>
+          <%}); %>
+            <%} else { %>
+              <div>
+                <h2 style="padding-left:30% ;">The cart is empty</h2>
+              </div>
+              <% } %>
 
     </div>
 
 
     <div>
       <span><a href="/" class="fa fa-home home_footer"></a></span>
-      <span><a href="/cart" class="fa fa-shopping-cart cart_footer"></a></span>
+      <span class="cart_footer"><a href="/cart" class="fa fa-shopping-cart " id='lblCartCoun1t'></a></span>
     </div>
 
 

@@ -52,6 +52,10 @@ let Cart = {
         // obj.length is automatically incremented
         // every time an element is added.
         [].push.call(this, item)
+    },
+    splice: function splice(index, a) {
+
+        [].splice.call(this, index, a)
     }
 }
 Cart.Upsert = Upsert;
@@ -123,7 +127,9 @@ function updateTheCart(prdId, quantity, price, cart) {
 
         const index = cart.findItemInCartByIdThenRerunIndex(cart, prdId);
         if (index > -1) {
+
             cart.splice(index, 1);
+
         }
 
     }
@@ -174,9 +180,9 @@ function findItemInCartByIdThenRerunIndex(cart, prductId) {
 
             return itemIndex;
         }
-        return -1;
-    }
 
+    }
+    return -1;
 }
 
 /////////////////////////////////////////////////////////////////////
@@ -281,8 +287,8 @@ app.get('/product/:prdId', (req, res) => {
 
 app.get('/cart', (req, res) => {
 
-    if (req.sessionStore.Cart === "undefined") {
-        res.render('cart', { row: null, count: 0, totalcost: 0 });
+    if (typeof req.sessionStore.Cart === "undefined") {
+        res.render('cart', { user: null, count: 0, totalcost: 0 });
     }
     else {
         var cart = req.sessionStore.Cart;
@@ -366,11 +372,11 @@ app.post('/updateCart', (request, response) => {
 
     if (typeof request.sessionStore.Cart === "undefined") {
         request.sessionStore.Cart = Object.create(Cart);
-        request.sessionStore.Cart.Upsert(request.body.productId, request.body.quality, request.body.price, request.body.productName, request.body.imageUrl);
+        request.sessionStore.Cart.Upsert(request.body.productId, request.body.quantity, request.body.price, request.body.productName, request.body.imageUrl);
     }
     else {
 
-        request.sessionStore.Cart.Upsert(request.body.productId, request.body.quality, request.body.price, request.body.productName, request.body.imageUrl);
+        request.sessionStore.Cart.Upsert(request.body.productId, request.body.quantity, request.body.price, request.body.productName, request.body.imageUrl);
 
     }
     response.json({ cartNumber: request.sessionStore.Cart.totalNumberOfItems });

@@ -68,7 +68,7 @@ function updateCart() {
             price: productPrice.replace('$', ''),
             imageUrl: imageUrl,
             productName: productName,
-            quality: Quantity
+            quantity: Quantity
         })
     }).then((response) => response.json())
         .then((data) => {
@@ -82,6 +82,7 @@ function updateCart() {
 
 
 }
+
 
 
 function Send(aa, bb, cc, dd, ee) {
@@ -104,7 +105,7 @@ function Send(aa, bb, cc, dd, ee) {
             cartid: null,
             imageurl: a,
             price: b,
-            quality: c,
+            quantity: c,
             total: total,
             Name: d,
             ProductId: e
