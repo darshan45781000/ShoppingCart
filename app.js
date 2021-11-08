@@ -153,7 +153,7 @@ function updateAllTotals(cart) {
     cart.GrandTotal = 0;
     for (var itemIndex = 0; itemIndex < cart.length; itemIndex++) {
 
-        cart.totalNumberOfItems = + cart[itemIndex].Quantity;
+        cart.totalNumberOfItems += Number(cart[itemIndex].Quantity);
         cart.GrandTotal = cart[itemIndex].QuantityTimesPrice;
 
     }
