@@ -196,7 +196,7 @@ var connection = mysql.createConnection(
         host: "localhost",
         user: "root",
         password: "Salam",
-        database: "shoppingcart",
+        database: "sweet-bakery",
         multipleStatements: true
 
     }
@@ -229,35 +229,28 @@ app.set('views', path.join(__dirname, '/views'));
 
 app.get('', (req, res) => {
     connection.query("SELECT * from products", (err, rows) => {
-        connection.query("select count(*) AS a from carttable", (err, rowss) => {
-            console.log(rowss);
-            console.log(rowss[0].a);
-            let b = rowss[0].a;
-            if (!err) {
-                console.log(req.sessionID);
-                // console.log(req.session);
-                console.log(req.sessionStore);
 
+        if (!err) {
 
-
-
-
-                res.render('home', { user: rows, count: b });
+            if (typeof req.sessionStore.Cart === "undefined") {
+                res.render('home', { products: rows, count: 0 });
             }
             else {
-                console.log(err);
+                res.render('home', { products: rows, count: Cart.totalNumberOfItems });
             }
-            // console.log(rows);
-        })
-    })
-})
+        }
+        else {
+            console.log(err);
+        }
 
+    })
+});
 app.get('/product/:prdId', (req, res) => {
     var result;
     var itemsInCart;
     //https://stackoverflow.com/questions/25187903/what-do-curly-braces-around-javascript-variable-name-mean
     const { prdId } = req.params;
-    let sql = "SELECT * from products where ProductId=" + prdId;
+    let sql = "SELECT * from products where Id=" + prdId;
     connection.query(sql, (err, rows) => {
 
 

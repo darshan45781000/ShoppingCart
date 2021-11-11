@@ -123,7 +123,7 @@ CREATE TABLE `products` (
 
 LOCK TABLES `products` WRITE;
 /*!40000 ALTER TABLE `products` DISABLE KEYS */;
-INSERT INTO `products` VALUES (3,'نان سنگک','SANGAK BREAD',4.25,NULL,NULL,'1'),(4,'نان بربری سفید','BARBARI BREAD',3.25,NULL,NULL,'1'),(5,'نان بربری سبوسدار','WHEAT BARBARI BREAD',3.25,NULL,NULL,'1'),(6,'نان شیرمال','SHIRMAL BREAD',4.25,NULL,NULL,'1'),(7,'شیرینی رولت','CREAM ROLL',6.00,NULL,NULL,'5 PICE'),(8,'شیرینی نان خامه ای','CREAM PUFF',6.00,NULL,NULL,'4 PICE'),(9,'کیک یزدی','YAZDI CUPCAKE',7.00,NULL,NULL,'6 PICE'),(10,'ماست ساده','YOGURT',4.00,NULL,NULL,'2 LB'),(11,'ماست چکیده','GREEK YOUGRT',6.00,NULL,NULL,'1LB'),(12,'کشک','KASHK',8.00,NULL,NULL,'1LB'),(13,'سرشیر','CREAM',4.00,NULL,NULL,'8 OZ'),(14,'کشک و بادمجان','KASHK O BADEMJAN',6.00,NULL,NULL,'1LB'),(15,'حلیم گندم با گوشت','HALEM',6.00,NULL,NULL,'1LB'),(16,'بادمجان سرخ کرده','FRIED EGGPLANT',7.00,NULL,NULL,'8OZ'),(17,'کله پاچه کامل','LAMB HEAD',25.00,NULL,NULL,'1'),(18,'عسل طبیعی','HONEY',17.00,NULL,NULL,'1.5LB'),(19,'ترشی ','PICKLES',10.00,NULL,NULL,'12OZ'),(20,'مربا','JAM',9.00,NULL,NULL,'8OZ'),(21,'زیتون پرورده','ZEYTOON PARVARDEH',13.00,NULL,NULL,'1LB');
+INSERT INTO `products` VALUES (3,'نان سنگک','SANGAK BREAD',4.25,'img/Sangak.jpg',NULL,'1'),(4,'ننان بربری سفید','BARBARI BREAD',3.25,'img/WhiteBarbari.jpg',NULL,'1'),(5,'نان بربری سبوسدار','WHEAT BARBARI BREAD',3.25,'img/BrownBarbari.jpg',NULL,'1'),(6,'نان شیرمال','SHIRMAL BREAD',4.25,'img/Shirmal.jpg',NULL,'1'),(7,'شیرینی رولت','CREAM ROLL',6.00,'img/Rolet.jpg',NULL,'5 PICE'),(8,'شیرینی نان خامه ای','CREAM PUFF',6.00,'img/Creampuf.jpg',NULL,'4 PICE'),(9,'کیک یزدی','YAZDI CUPCAKE',7.00,'img/Yazdi.jpg',NULL,'6 PICE'),(10,'ماست ساده','YOGURT',4.00,'img/Maast.jpg',NULL,'2 LB'),(11,'ماست چکیده','GREEK YOUGRT',6.00,'img/Mastechekideh.jpg',NULL,'1LB'),(12,'کشک','KASHK',8.00,'img/kashk.jpg',NULL,'1LB'),(13,'سرشیر','CREAM',4.00,'img/kashk.jpg',NULL,'8 OZ'),(14,'کشک و بادمجان','KASHK O BADEMJAN',6.00,'img/kashkBademjan.jpg',NULL,'1LB'),(15,'حلیم گندم با گوشت','HALEM',6.00,'img/Halim.jpg',NULL,'1LB'),(16,'بادمجان سرخ کرده','FRIED EGGPLANT',7.00,'img/Bademjan.jpg',NULL,'8OZ'),(17,'کله پاچه کامل','LAMB HEAD',25.00,'img/Kpache.jpg',NULL,'1'),(18,'عسل طبیعی','HONEY',17.00,'img/Honey.jpg',NULL,'1.5LB'),(19,'ترشی ','PICKLES',10.00,'img/Torshi.jpg',NULL,'12OZ'),(20,'مربا','JAM',9.00,'img/Moraba.jpg',NULL,'8OZ'),(21,'زیتون پرورده','ZEYTOON PARVARDEH',13.00,'img/zeytoon.jpg',NULL,'1LB');
 /*!40000 ALTER TABLE `products` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -136,4 +136,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-09-21 17:51:17
+-- Dump completed on 2021-11-11  0:20:00
