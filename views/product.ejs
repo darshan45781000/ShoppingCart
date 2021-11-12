@@ -18,10 +18,10 @@
 
   <div class="container">
     <div class="image">
-      <div class="grid-box"><img src="<%=" /" + product.ImageUrl%>" /></div>
+      <div class="grid-box"><img src="<%=" /" + product.imageUrl%>" /></div>
     </div>
     <div class="description">
-      <%= product.ProductDescription %>
+      <%= product.persianName %>
         <div>
           <br>
           Quantitiy: <select style="font-size: 16px;" id="quantity">
@@ -50,10 +50,10 @@
     </div>
     <div class="order">
       <div class="order_boarder">
-        <input type="text" hidden id="image-url" value="<%=product.ImageUrl %>">
-        <input type="text" hidden id="product-price" value="<%=product.ProductPrice %>">
-        <input type="text" hidden id="product-name" value="<%= product.ProductName %>">
-        <input type="text" hidden id="product-id" value="<%=product.ProductId %>">
+        <input type="text" hidden id="image-url" value="<%=product.imageUrl %>">
+        <input type="text" hidden id="product-price" value="<%=product.price %>">
+        <input type="text" hidden id="product-name" value="<%= product.name %>">
+        <input type="text" hidden id="product-id" value="<%=product.id %>">
         <div class="add-to-cart" onclick="updateCart()">Add to cart</div>
       </div>
       <div class="border_menu">

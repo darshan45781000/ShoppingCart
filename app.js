@@ -236,7 +236,7 @@ app.get('', (req, res) => {
                 res.render('home', { products: rows, count: 0 });
             }
             else {
-                res.render('home', { products: rows, count: Cart.totalNumberOfItems });
+                res.render('home', { products: rows, count: req.sessionStore.Cart.totalNumberOfItems });
             }
         }
         else {
@@ -256,6 +256,7 @@ app.get('/product/:prdId', (req, res) => {
 
         if (!err) {
             result = rows;
+            console.log(rows);
         }
         else {
             console.log(err);
@@ -267,8 +268,7 @@ app.get('/product/:prdId', (req, res) => {
 
         }
         else {
-
-            res.render('product', { product: result[0], itemsInCart: 0 });
+             res.render('product', { product: result[0], itemsInCart: 0 });
 
         }
 
