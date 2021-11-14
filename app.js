@@ -268,7 +268,7 @@ app.get('/product/:prdId', (req, res) => {
 
         }
         else {
-             res.render('product', { product: result[0], itemsInCart: 0 });
+            res.render('product', { product: result[0], itemsInCart: 0 });
 
         }
 
@@ -319,17 +319,15 @@ app.get('/cart', (req, res) => {
 )
 
 app.get('/placeorder', (req, res) => {
-    connection.query("select count(*) AS a from carttable", (err, rowss) => {
-        console.log(rowss);
-        console.log(rowss[0].a);
-        let b = rowss[0].a;
-        if (!err) {
+    if (typeof req.sessionStore.Cart === "undefined") {
+        res.render('placeorder', { cart: null })
+    }
+    else {
+        res.render('placeorder', { cart: req.sessionStore.Cart })
+    }
+});
 
-            res.render('placeorder', { count: b });
-        }
 
-    })
-})
 
 app.get('/order', (req, res) => {
     connection.query("select count(*) AS a from carttable", (err, rowss) => {

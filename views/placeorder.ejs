@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="css/home.css">
 <link rel="stylesheet" href="css/placeorder.css">
 <link rel="manifest" href="manifest.json">
@@ -17,8 +17,8 @@
 
     <button class="checkoutbutton"><a href="/order"><b>Place your order</b></a></button>
 
-      <form action="/action_page.php">
-        <div class="Name_label">
+    <form action="/action_page.php">
+      <div class="Name_label">
         <label for="fname"> Name</label>
         <input type="text" id="fname" class="Name_text" name="firstname" placeholder="Your name..">
       </div>
@@ -27,23 +27,41 @@
         <label for="lname">Contact No</label>
         <input type="text" id="lname" class="Contact_text" name="lastname" placeholder="Your Contact No..">
       </div>
-        
+
       <div>
         <div>
-        <label for="subject" class="Address_label">Address</label>
-      </div>
-        <textarea id="subject" class="Address_text" name="subject" placeholder="Your address..." style="height:200px"></textarea>
-      </div>
-      </form>
-
-      <div>
-        <span><a href="/" class="fa fa-home home_footer" ></a></span>
-        <span><a href="/cart" class="fa fa-shopping-cart cart_footer" > </a></span>
+          <label for="subject" class="Address_label">Address</label>
         </div>
-    </div>
-  
+        <textarea id="subject" class="Address_text" name="subject" placeholder="Your address..."
+          style="height:200px"></textarea>
+      </div>
+    </form>
+    <div>
+      Order Total: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $ <%=cart.GrandTotal %>
+        <% for(var itemIndex=0; itemIndex < cart.length; itemIndex++) %>
+          <% { %>
+            <div>
+              <%= cart[itemIndex].ProductName %>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <%= cart[itemIndex].Price %>
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  <%= cart[itemIndex].Quantity %>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <%= cart[itemIndex].QuantityTimesPrice %>
+            </div>
 
-  
+            <% } %>
+
+
+    </div>
+    <div>
+      <span><a href="/" class="fa fa-home home_footer"></a></span>
+      <span><a href="/cart" class="fa fa-shopping-cart cart_footer"> </a></span>
+    </div>
+  </div>
+
+
+
 
 </body>
 
