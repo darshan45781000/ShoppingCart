@@ -29,28 +29,38 @@
       </div>
 
       <div>
-        <div>
-          <label for="subject" class="Address_label">Address</label>
-        </div>
-        <textarea id="subject" class="Address_text" name="subject" placeholder="Your address..."
-          style="height:200px"></textarea>
+        <label for="Location">Choose a Location:</label>
+        <select name="Locations" id="locations">
+          <option value="Please Select" selected>Please Select a delivery location!</option>
+          <% locations.forEach(function(location){%>
+            <option value=" <%= location.city + " --" + location.name %> " ><%= location.city + "--" + location.name %>
+            </option>
+            <%}); %>
+        </select>
+
+        <!-- <div>
+          <label for=" subject" class="Address_label">Address</label>
+      </div>
+      <textarea id="subject" class="Address_text" name="subject" placeholder="Your address..."
+        style="height:200px"></textarea> -->
       </div>
     </form>
     <div>
       Order Total: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $ <%=cart.GrandTotal %>
+
         <% for(var itemIndex=0; itemIndex < cart.length; itemIndex++) %>
           <% { %>
             <div>
-              <%= cart[itemIndex].ProductName %>
+              <%= cart[0].ProductName %>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <%= cart[itemIndex].Price %>
+                <%= cart[0].Price %>
                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                  <%= cart[itemIndex].Quantity %>
+                  <%= cart[0].Quantity %>
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <%= cart[itemIndex].QuantityTimesPrice %>
+                    <%= cart[0].QuantityTimesPrice %>
             </div>
 
-            <% } %>
+            <% }; %>
 
 
     </div>

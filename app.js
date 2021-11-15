@@ -319,12 +319,20 @@ app.get('/cart', (req, res) => {
 )
 
 app.get('/placeorder', (req, res) => {
-    if (typeof req.sessionStore.Cart === "undefined") {
-        res.render('placeorder', { cart: null })
-    }
-    else {
-        res.render('placeorder', { cart: req.sessionStore.Cart })
-    }
+
+    connection.query("select city, name   from delivery_location", (err, rows) => {
+
+        if (!err) {
+            if (typeof req.sessionStore.Cart === "undefined") {
+                res.render('placeorder', { cart: [], locations: [] })
+            }
+            else {
+                res.render('placeorder', { cart: req.sessionStore.Cart, locations: rows })
+            }
+        }
+    });
+
+
 });
 
 
