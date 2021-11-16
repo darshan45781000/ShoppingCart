@@ -46,21 +46,25 @@
       </div>
     </form>
     <div>
-      Order Total: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $ <%=cart.GrandTotal %>
-
-        <% for(var itemIndex=0; itemIndex < cart.length; itemIndex++) %>
-          <% { %>
+      Order Total: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $ <%=GrandTotal %>
+      <% if(GrandTotal !=0) {%>
+      <% cart.forEach(function(cart){%>
             <div>
-              <%= cart[0].ProductName %>
+              <%=cart.ProductName %>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <%= cart[0].Price %>
+                <%= cart.Price %>
                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                  <%= cart[0].Quantity %>
+                  <%= cart.Quantity %>
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <%= cart[0].QuantityTimesPrice %>
+                    <%= cart.QuantityTimesPrice %>
             </div>
 
-            <% }; %>
+            <%}); %>
+            <%} else { %>
+              <div>
+                <h2 style="padding-left:30% ;">The cart is empty</h2>
+              </div>
+              <% } %>
 
 
     </div>

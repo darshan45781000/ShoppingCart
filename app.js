@@ -320,14 +320,23 @@ app.get('/cart', (req, res) => {
 
 app.get('/placeorder', (req, res) => {
 
-    connection.query("select city, name   from delivery_location", (err, rows) => {
+    connection.query("select city, name   from delivery_location", (err, rowss) => {
 
         if (!err) {
             if (typeof req.sessionStore.Cart === "undefined") {
-                res.render('placeorder', { cart: [], locations: [] })
+               
+                res.render('placeorder', { cart: [], locations: [], GrandTotal:0 })
             }
             else {
-                res.render('placeorder', { cart: req.sessionStore.Cart, locations: rows })
+                var cart = req.sessionStore.Cart;
+                var rows = [];
+                for (var itemIndex = 0; itemIndex < cart.length; itemIndex++)
+               {
+               rows.push(cart[itemIndex]);
+               }
+                console.log(req.sessionStore.Cart)
+                console.log(rowss)
+                res.render('placeorder', { cart:rows, locations: rowss, GrandTotal:req.sessionStore.Cart.GrandTotal })
             }
         }
     });
