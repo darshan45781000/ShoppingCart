@@ -73,8 +73,7 @@ function updateCart() {
     }).then((response) => response.json())
         .then((data) => {
 
-            console.log("success");
-            document.getElementById("lblCartCoun1t").textContent = data.cartNumber;
+            document.getElementById("lblCartCoun1t").textContent = data.object.cartNumber;
         })
         .catch((error) => {
             alert(error);

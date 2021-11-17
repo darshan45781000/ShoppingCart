@@ -138,8 +138,8 @@ function updateTheCart(prdId, quantity, price, cart) {
         const iFoundTheItemUsingThePrdId = cart.findItemInCartByIdThenRerunIndex(cart, prdId);
         cart[iFoundTheItemUsingThePrdId].Quantity = quantity;
         cart[iFoundTheItemUsingThePrdId].Price = price;
-        cart[iFoundTheItemUsingThePrdId].QuantityTimesPrice = cart[iFoundTheItemUsingThePrdId].Price * cart[iFoundTheItemUsingThePrdId].quantity;
-
+        cart[iFoundTheItemUsingThePrdId].QuantityTimesPrice = Number(cart[iFoundTheItemUsingThePrdId].Price) *Number( cart[iFoundTheItemUsingThePrdId].Quantity);
+         console.log(cart[iFoundTheItemUsingThePrdId].QuantityTimesPrice);
 
     }
 
@@ -348,8 +348,7 @@ app.get('/placeorder', (req, res) => {
 
 app.get('/order', (req, res) => {
     connection.query("select count(*) AS a from carttable", (err, rowss) => {
-        console.log(rowss);
-        console.log(rowss[0].a);
+       
         let b = rowss[0].a;
         if (!err) {
 
@@ -387,7 +386,9 @@ app.post('/updateCart', (request, response) => {
         request.sessionStore.Cart.Upsert(request.body.productId, request.body.quantity, request.body.price, request.body.productName, request.body.imageUrl);
 
     }
-    response.json({ cartNumber: request.sessionStore.Cart.totalNumberOfItems });
+    var object= {"cartNumber":  request.sessionStore.Cart.totalNumberOfItems , "GrandTotal": request.sessionStore.Cart.GrandTotal}
+
+    response.json({ object });
 })
 
 // app.post('/insert', (request, response) => {
