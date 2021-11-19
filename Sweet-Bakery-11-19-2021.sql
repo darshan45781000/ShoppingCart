@@ -1,3 +1,5 @@
+CREATE DATABASE  IF NOT EXISTS `sweet-bakery` /*!40100 DEFAULT CHARACTER SET utf8 */ /*!80016 DEFAULT ENCRYPTION='N' */;
+USE `sweet-bakery`;
 -- MySQL dump 10.13  Distrib 8.0.25, for Win64 (x86_64)
 --
 -- Host: localhost    Database: sweet-bakery
@@ -23,7 +25,7 @@ DROP TABLE IF EXISTS `customers`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `customers` (
-  `id` int NOT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(45) NOT NULL,
   `phone` varchar(45) NOT NULL,
   `delivery_loc_id` int DEFAULT NULL,
@@ -79,13 +81,13 @@ DROP TABLE IF EXISTS `orders`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `orders` (
-  `id` int NOT NULL,
-  `productId` int NOT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `customer_name` varchar(100) NOT NULL,
+  `delivery_loc_id` int NOT NULL,
+  `total` decimal(2,0) NOT NULL,
   `created_dt` datetime NOT NULL,
   `updated_dt` datetime DEFAULT NULL,
-  `total` decimal(2,0) NOT NULL,
-  `delivery_loc_id` int NOT NULL,
-  `customer_id` int NOT NULL,
+  `uuid` char(16) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Table to store orders paced by customers. it will store deliver location ids too.';
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -162,4 +164,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-11-14 22:50:57
+-- Dump completed on 2021-11-19  2:00:49

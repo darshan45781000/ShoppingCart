@@ -4,6 +4,10 @@ const path = require("path");
 const express = require("express");
 const bodyParser = require("body-parser");
 const session = require('express-session');
+const {
+    v1: uuidv1,
+    v4: uuidv4,
+} = require('uuid');
 
 const MemoryStore = require('memorystore')(session);
 //I was not able to make this exrernal moudle to work
@@ -95,12 +99,6 @@ function Upsert(prdId, quantity, price, productName, imageUrl) {
 
 }
 
-
-
-
-
-
-
 // Adding an item to the cart
 
 function addToCart(prdId, quantity, price, productName, imageUrl, cart) {
@@ -138,8 +136,8 @@ function updateTheCart(prdId, quantity, price, cart) {
         const iFoundTheItemUsingThePrdId = cart.findItemInCartByIdThenRerunIndex(cart, prdId);
         cart[iFoundTheItemUsingThePrdId].Quantity = quantity;
         cart[iFoundTheItemUsingThePrdId].Price = price;
-        cart[iFoundTheItemUsingThePrdId].QuantityTimesPrice = Number(cart[iFoundTheItemUsingThePrdId].Price) *Number( cart[iFoundTheItemUsingThePrdId].Quantity);
-         console.log(cart[iFoundTheItemUsingThePrdId].QuantityTimesPrice);
+        cart[iFoundTheItemUsingThePrdId].QuantityTimesPrice = Number(cart[iFoundTheItemUsingThePrdId].Price) * Number(cart[iFoundTheItemUsingThePrdId].Quantity);
+        console.log(cart[iFoundTheItemUsingThePrdId].QuantityTimesPrice);
 
     }
 
@@ -294,29 +292,7 @@ app.get('/cart', (req, res) => {
 
     }
 
-}
-
-    // connection.query("SELECT * from carttable", (err, rows) => {
-    // connection.query("select count(*) AS a from carttable", (err, rowss) => {
-    //     console.log(rows);
-    //     let b = rowss[0].a;
-    //     connection.query("select sum(ProductTotalPrice) AS b from carttable", (err, rowsss) => {
-    //         let c = rowsss[0].b;
-    //         if (c == null) {
-    //             c = 0;
-    //         }
-    //         if (!err) {
-    //             res.render('cart', { user: rows, count: b, totalcost: c });
-    //         }
-    //         else {
-    //             console.log(err);
-    //         }
-    // console.log(rows);
-    //     })
-    // })
-    //})
-    //})
-)
+})
 
 app.get('/placeorder', (req, res) => {
 
@@ -324,19 +300,18 @@ app.get('/placeorder', (req, res) => {
 
         if (!err) {
             if (typeof req.sessionStore.Cart === "undefined") {
-               
-                res.render('placeorder', { cart: [], locations: [], GrandTotal:0 })
+
+                res.render('placeorder', { cart: [], locations: [], GrandTotal: 0 })
             }
             else {
                 var cart = req.sessionStore.Cart;
                 var rows = [];
-                for (var itemIndex = 0; itemIndex < cart.length; itemIndex++)
-               {
-               rows.push(cart[itemIndex]);
-               }
+                for (var itemIndex = 0; itemIndex < cart.length; itemIndex++) {
+                    rows.push(cart[itemIndex]);
+                }
                 console.log(req.sessionStore.Cart)
                 console.log(rowss)
-                res.render('placeorder', { cart:rows, locations: rowss, GrandTotal:req.sessionStore.Cart.GrandTotal })
+                res.render('placeorder', { cart: rows, locations: rowss, GrandTotal: req.sessionStore.Cart.GrandTotal })
             }
         }
     });
@@ -347,15 +322,27 @@ app.get('/placeorder', (req, res) => {
 
 
 app.get('/order', (req, res) => {
-    connection.query("select count(*) AS a from carttable", (err, rowss) => {
-       
-        let b = rowss[0].a;
-        if (!err) {
 
-            res.render('order', { count: b });
-        }
+    if (typeof req.sessionStore.Cart != "undefined") {
+        let uuid = uuidv1();
+        //to- do --we need to offset the time to EST and also set MYsql time to estern as well
+        let now = Date.now();
 
-    })
+        connection.query("INSERT INTO orders (customer_name, delivery_loc_id, total,created_dt,guid) VALUES ('Omid', '34', 99,now, uuid)", (err, rowss) => {
+
+
+            if (!err) {
+                let inserted_id = result.insertId;
+                for (var itemIndex = 0; itemIndex < cart.length; itemIndex++) {
+                    //insert ids of productID and orderID  into product-order table  
+                }
+
+
+                res.render('order', { count: b });
+            }
+
+        })
+    }
 })
 
 
@@ -386,42 +373,12 @@ app.post('/updateCart', (request, response) => {
         request.sessionStore.Cart.Upsert(request.body.productId, request.body.quantity, request.body.price, request.body.productName, request.body.imageUrl);
 
     }
-    var object= {"cartNumber":  request.sessionStore.Cart.totalNumberOfItems , "GrandTotal": request.sessionStore.Cart.GrandTotal}
+    var object = { "cartNumber": request.sessionStore.Cart.totalNumberOfItems, "GrandTotal": request.sessionStore.Cart.GrandTotal }
 
     response.json({ object });
 })
 
-// app.post('/insert', (request, response) => {
-//     let ImageUrl = request.body.imageurl;
-//     let price = request.body.price;
-//     let quantity = request.body.quality;
-//     let totalprice = request.body.total;
-//     let Name = request.body.Name;
-//     let ProcuctId = request.body.ProductId;
-//     let CartId = request.body.cartid;
-//     console.log(CartId);
 
-
-//     //let sql = "insert into carttable(UserId,ImageUrl,ProductName,ProductPrice,ProductId,ProductTotalPrice,Quantity) values ('Darshan123','ImageUrl', 'name','price',1,'10','1')";
-//     let sql = "insert into carttable(CartId,UserId,ImageUrl,ProductName,ProductPrice,ProductId,ProductTotalPrice,Quantity) values (CartId,'Darshan123','" + ImageUrl + "','" + Name + "','" + price + "'," + ProcuctId + ",'" + totalprice + "','" + quantity + "'" + ")";
-//     connection.query(sql, (err, rows) => {
-//         if (!err) {
-//             request.sessionStore.Cart = { cartname: "omid" }
-//             console.log(request.sessionStore);
-//             response.json({ success: true })
-//             console.log(request.sessionStore.Cart);
-//         }
-//         else {
-//             console.log(err);
-//         }
-//     })
-
-
-
-// })
-
-
-//listen on port 3000
 app.listen(port, () => console.info(`listen on port ${port}`))
 
 

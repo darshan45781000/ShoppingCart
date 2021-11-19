@@ -17,15 +17,15 @@
 
     <button class="checkoutbutton"><a href="/order"><b>Place your order</b></a></button>
 
-    <form action="/action_page.php">
+    <form>
       <div class="Name_label">
         <label for="fname"> Name</label>
         <input type="text" id="fname" class="Name_text" name="firstname" placeholder="Your name..">
       </div>
 
       <div class="Contact_label">
-        <label for="lname">Contact No</label>
-        <input type="text" id="lname" class="Contact_text" name="lastname" placeholder="Your Contact No..">
+        <label for="lname">Phone Number</label>
+        <input type="text" id="phone-number" class="Contact_text" name="phone-number" placeholder="Your Contact No..">
       </div>
 
       <div>
@@ -38,17 +38,13 @@
             <%}); %>
         </select>
 
-        <!-- <div>
-          <label for=" subject" class="Address_label">Address</label>
-      </div>
-      <textarea id="subject" class="Address_text" name="subject" placeholder="Your address..."
-        style="height:200px"></textarea> -->
+
       </div>
     </form>
     <div>
       Order Total: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $ <%=GrandTotal %>
-      <% if(GrandTotal !=0) {%>
-      <% cart.forEach(function(cart){%>
+        <% if(GrandTotal !=0) {%>
+          <% cart.forEach(function(cart){%>
             <div>
               <%=cart.ProductName %>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -60,11 +56,11 @@
             </div>
 
             <%}); %>
-            <%} else { %>
-              <div>
-                <h2 style="padding-left:30% ;">The cart is empty</h2>
-              </div>
-              <% } %>
+              <%} else { %>
+                <div>
+                  <h2 style="padding-left:30% ;">The cart is empty</h2>
+                </div>
+                <% } %>
 
 
     </div>
