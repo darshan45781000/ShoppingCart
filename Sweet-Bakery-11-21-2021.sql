@@ -1,10 +1,8 @@
-CREATE DATABASE  IF NOT EXISTS `sweet-bakery` /*!40100 DEFAULT CHARACTER SET utf8 */ /*!80016 DEFAULT ENCRYPTION='N' */;
-USE `sweet-bakery`;
--- MySQL dump 10.13  Distrib 8.0.25, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.26, for Win64 (x86_64)
 --
 -- Host: localhost    Database: sweet-bakery
 -- ------------------------------------------------------
--- Server version	8.0.25
+-- Server version	8.0.26
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -87,10 +85,10 @@ CREATE TABLE `orders` (
   `total` decimal(2,0) NOT NULL,
   `created_dt` datetime NOT NULL,
   `updated_dt` datetime DEFAULT NULL,
-  `uuid` char(16) NOT NULL,
   `phone_number` varchar(45) NOT NULL,
+  `uuid` varchar(150) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Table to store orders paced by customers. it will store deliver location ids too.';
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Table to store orders paced by customers. it will store deliver location ids too.';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -99,6 +97,7 @@ CREATE TABLE `orders` (
 
 LOCK TABLES `orders` WRITE;
 /*!40000 ALTER TABLE `orders` DISABLE KEYS */;
+INSERT INTO `orders` VALUES (1,'fa',16,3,'2012-12-11 00:00:00','2012-12-11 00:00:00','123',NULL),(2,'fa',16,3,'2012-12-11 00:00:00','2012-12-11 00:00:00','123','akc-'),(3,'fa',16,3,'2012-12-11 00:00:00','2012-12-11 00:00:00','123','akc-'),(4,'fa',16,3,'2012-12-11 00:00:00','2012-12-11 00:00:00','123','akc-'),(5,'fa',16,3,'2012-12-11 00:00:00','2012-12-11 00:00:00','123','akc-'),(6,'fa',16,3,'2012-12-11 00:00:00','2012-12-11 00:00:00','123','akc-'),(7,'fa',16,3,'2012-12-11 00:00:00','2012-12-11 00:00:00','123','akc-'),(8,'fa',16,3,'2012-12-11 00:00:00','2012-12-11 00:00:00','123','akc-'),(9,'fa',16,3,'2012-12-11 00:00:00','2012-12-11 00:00:00','123','akc-'),(10,'q',17,3,'2012-12-11 00:00:00','2012-12-11 00:00:00','2','ad130d80-4af6-11ec-9ba2-81233b5ec4e8'),(11,'a',1,4,'2021-10-00 00:00:00','2021-10-00 00:00:00','1','f6753750-4af6-11ec-a8c2-2d72d968f34a'),(12,'a',1,4,'2021-10-00 00:00:00','2021-10-00 00:00:00','1','004a7560-4af7-11ec-a8c2-2d72d968f34a');
 /*!40000 ALTER TABLE `orders` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -165,4 +164,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-11-21  2:08:55
+-- Dump completed on 2021-11-22  0:12:57

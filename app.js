@@ -296,7 +296,7 @@ app.get('/cart', (req, res) => {
 
 app.get('/placeorder', (req, res) => {
 
-    connection.query("select city, name   from delivery_location", (err, rowss) => {
+    connection.query("select city, name,id   from delivery_location", (err, rowss) => {
 
         if (!err) {
             if (typeof req.sessionStore.Cart === "undefined") {
@@ -327,14 +327,18 @@ app.post('/order', (req, res) => {
 
         var cart = req.sessionStore.Cart;
         var items = [];
+        var name=req.body.name;
+        var num=req.body.phone;
+        var loc=req.body.location;
+        var date=req.body.date;
         for (var itemIndex = 0; itemIndex < cart.length; itemIndex++) {
             items.push(cart[itemIndex]);
         }
         let uuid = uuidv1();
-        //to- do --we need to offset the time to EST and also set MYsql time to estern as well
-        let now = Date.now();
-
-        connection.query("INSERT INTO orders (customer_name,phone_number,delivery_loc_id, total,created_dt,guid) VALUES (req.name,req.phone,req.location,cart.GrandTotal, now, uuid)", (err, rowss) => {
+       // let sql = "insert into carttable(UserId,ImageUrl,ProductName,ProductPrice,ProductId,ProductTotalPrice,Quantity) values ('Darshan123','ImageUrl', 'name','price',1,'10','1')";
+        let sql ="INSERT INTO orders (id,customer_name,delivery_loc_id, total,created_dt,updated_dt,phone_number,uuid) VALUES (0,'" + name + "'," + loc + "," + cart.GrandTotal + ",'" + date + "','" + date + "'," + num + ", '" + uuid + "'"+")";
+        console.log(sql);
+        connection.query(sql, (err, rowss) => {
 
 
             if (!err) {

@@ -34,7 +34,7 @@
         <select name="Locations" id="locations">
           <option value="Please Select" selected>Please Select a delivery location!</option>
           <% locations.forEach(function(location){%>
-            <option value=" <%= location.city + " --" + location.name %> " ><%= location.city + "--" + location.name %>
+            <option value=" <%=location.id %> " > <%= location.city + "--" + location.name %>
             </option>
             <%}); %>
         </select>
