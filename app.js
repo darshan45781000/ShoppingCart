@@ -321,30 +321,38 @@ app.get('/placeorder', (req, res) => {
 
 
 
-app.get('/order', (req, res) => {
+app.post('/order', (req, res) => {
 
     if (typeof req.sessionStore.Cart != "undefined") {
+
+        var cart = req.sessionStore.Cart;
+        var items = [];
+        for (var itemIndex = 0; itemIndex < cart.length; itemIndex++) {
+            items.push(cart[itemIndex]);
+        }
         let uuid = uuidv1();
         //to- do --we need to offset the time to EST and also set MYsql time to estern as well
         let now = Date.now();
 
-        connection.query("INSERT INTO orders (customer_name, delivery_loc_id, total,created_dt,guid) VALUES ('Omid', '34', 99,now, uuid)", (err, rowss) => {
+        connection.query("INSERT INTO orders (customer_name,phone_number,delivery_loc_id, total,created_dt,guid) VALUES (req.name,req.phone,req.location,cart.GrandTotal, now, uuid)", (err, rowss) => {
 
 
             if (!err) {
                 let inserted_id = result.insertId;
-                for (var itemIndex = 0; itemIndex < cart.length; itemIndex++) {
-                    //insert ids of productID and orderID  into product-order table  
-                }
+                items.forEach(item => {
+                    connection.query("INSERT INTO product_order (prd_id, order_id, quatity) VALUES (item.ProductId, inserted_id, item.Quantity)", (err, rowss) => {
+                    });
 
+                });
+                res.render('order', { count: 100 });
 
-                res.render('order', { count: b });
+            } else {
+                console.log(err);
             }
+        });
 
-        })
     }
-})
-
+});
 
 app.post('/delete', (req, res) => {
     let UserId = req.body.UserId;
@@ -380,5 +388,6 @@ app.post('/updateCart', (request, response) => {
 
 
 app.listen(port, () => console.info(`listen on port ${port}`))
+
 
 

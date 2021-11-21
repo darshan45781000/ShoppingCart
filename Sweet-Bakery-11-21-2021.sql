@@ -88,6 +88,7 @@ CREATE TABLE `orders` (
   `created_dt` datetime NOT NULL,
   `updated_dt` datetime DEFAULT NULL,
   `uuid` char(16) NOT NULL,
+  `phone_number` varchar(45) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Table to store orders paced by customers. it will store deliver location ids too.';
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -164,4 +165,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-11-19  2:00:49
+-- Dump completed on 2021-11-21  2:08:55

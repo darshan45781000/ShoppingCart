@@ -7,7 +7,7 @@
 <link rel="stylesheet" href="css/home.css">
 <link rel="stylesheet" href="css/placeorder.css">
 <link rel="manifest" href="manifest.json">
-<script src="js/input.js"></script>
+<script src="js/placeorder.js"></script>
 <title>Shopping App </title>
 </head>
 
@@ -15,7 +15,7 @@
 
   <div class="container">
 
-    <button class="checkoutbutton"><a href="/order"><b>Place your order</b></a></button>
+    <button id="place-order" class="checkoutbutton" onclick="order()"><b>Place your order</b></button>
 
     <form>
       <div class="Name_label">
@@ -24,12 +24,13 @@
       </div>
 
       <div class="Contact_label">
-        <label for="lname">Phone Number</label>
-        <input type="text" id="phone-number" class="Contact_text" name="phone-number" placeholder="Your Contact No..">
+        <label for="phone-number">Phone Number</label>
+        <input type="text" id="phone-number" class="Contact_text" name="phone-number" placeholder="Your Contact No.."
+          pattern="[7-9]{1}[0-9]{9}>
       </div>
 
       <div>
-        <label for="Location">Choose a Location:</label>
+        <label for=" Location">Choose a Location:</label>
         <select name="Locations" id="locations">
           <option value="Please Select" selected>Please Select a delivery location!</option>
           <% locations.forEach(function(location){%>
