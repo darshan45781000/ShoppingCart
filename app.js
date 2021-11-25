@@ -327,24 +327,24 @@ app.post('/order', (req, res) => {
 
         var cart = req.sessionStore.Cart;
         var items = [];
-        var name=req.body.name;
-        var num=req.body.phone;
-        var loc=req.body.location;
-        var date=req.body.date;
+        var name = req.body.name;
+        var num = req.body.phone;
+        var loc = req.body.location;
+        var date = req.body.date;
         for (var itemIndex = 0; itemIndex < cart.length; itemIndex++) {
             items.push(cart[itemIndex]);
         }
         let uuid = uuidv1();
-       // let sql = "insert into carttable(UserId,ImageUrl,ProductName,ProductPrice,ProductId,ProductTotalPrice,Quantity) values ('Darshan123','ImageUrl', 'name','price',1,'10','1')";
-        let sql ="INSERT INTO orders (id,customer_name,delivery_loc_id, total,created_dt,updated_dt,phone_number,uuid) VALUES (0,'" + name + "'," + loc + "," + cart.GrandTotal + ",'" + date + "','" + date + "'," + num + ", '" + uuid + "'"+")";
+        // let sql = "insert into carttable(UserId,ImageUrl,ProductName,ProductPrice,ProductId,ProductTotalPrice,Quantity) values ('Darshan123','ImageUrl', 'name','price',1,'10','1')";
+        let sql = "INSERT INTO orders (id,customer_name,delivery_loc_id, total,created_dt,updated_dt,phone_number,uuid) VALUES (0,'" + name + "'," + loc + "," + cart.GrandTotal + ",'" + date + "','" + date + "'," + num + ", '" + uuid + "'" + ")";
         console.log(sql);
         connection.query(sql, (err, rowss) => {
-
+            let inserted_id = rowss.insertId;
 
             if (!err) {
-                let inserted_id = result.insertId;
+
                 items.forEach(item => {
-                    connection.query("INSERT INTO product_order (prd_id, order_id, quatity) VALUES (item.ProductId, inserted_id, item.Quantity)", (err, rowss) => {
+                    connection.query("INSERT INTO product_order (prd_id, order_id, quatity) VALUES (item.ProductId, inserted_id, item.Quantity)", (err, rows) => {
                     });
 
                 });
