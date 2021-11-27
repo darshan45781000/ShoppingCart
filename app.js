@@ -331,29 +331,46 @@ app.post('/order', (req, res) => {
         var num = req.body.phone;
         var loc = req.body.location;
         var date = req.body.date;
+        var inserted_id = 0;
         for (var itemIndex = 0; itemIndex < cart.length; itemIndex++) {
             items.push(cart[itemIndex]);
         }
         let uuid = uuidv1();
         // let sql = "insert into carttable(UserId,ImageUrl,ProductName,ProductPrice,ProductId,ProductTotalPrice,Quantity) values ('Darshan123','ImageUrl', 'name','price',1,'10','1')";
-        let sql = "INSERT INTO orders (id,customer_name,delivery_loc_id, total,created_dt,updated_dt,phone_number,uuid) VALUES (0,'" + name + "'," + loc + "," + cart.GrandTotal + ",'" + date + "','" + date + "'," + num + ", '" + uuid + "'" + ")";
+
+        /////--------------------------------------------------------------------------------
+        ////----------------------------------------------------------------------------------
+        ///---------------Problem running queries sequentially, maybe the link below helps---------------
+        //https://stackoverflow.com/questions/45936021/node-mysql-sequential-query-execution
+        let sql = "INSERT INTO orders (customer_name,delivery_loc_id, total,created_dt,updated_dt,phone_number,uuid) VALUES ('" + name + "'," + loc + "," + cart.GrandTotal + ",'" + date + "','" + date + "'," + num + ", '" + uuid + "'" + ")";
         console.log(sql);
         connection.query(sql, (err, rowss) => {
-            let inserted_id = rowss.insertId;
+
 
             if (!err) {
-
-                items.forEach(item => {
-                    connection.query("INSERT INTO product_order (prd_id, order_id, quatity) VALUES (item.ProductId, inserted_id, item.Quantity)", (err, rows) => {
-                    });
-
-                });
-                res.render('order', { count: 100 });
+                inserted_id = rowss.insertId;
 
             } else {
                 console.log(err);
             }
+
+
+
+
         });
+        items.forEach(item => {
+            connection.query("INSERT INTO product_order (prd_id, order_id, quantity) VALUES (item.ProductId, inserted_id, item.Quantity)", (err1, rows) => {
+                if (!err1) {
+                    console.log("hurray");
+                    res.render('order', {});
+                } else {
+                    console.log(err1)
+                }
+
+            });
+
+        });
+        /////////////////////--------end of  the problematic block--------------------
 
     }
 });
