@@ -350,6 +350,19 @@ app.post('/order', (req, res) => {
             if (!err) {
                 inserted_id = rowss.insertId;
 
+                items.forEach(item => {
+                    connection.query("INSERT INTO product_order (prd_id, order_id, quantity) VALUES ('" + item.ProductId + "'," + inserted_id + ",'" + item.Quantity + "'" + ")", (err1, rows) => {
+                        if (!err1) {
+                            console.log("hurray");
+                            res.render('order', {});
+                        } else {
+                            console.log(err1)
+                        }
+
+                    });
+
+                });
+
             } else {
                 console.log(err);
             }
@@ -358,18 +371,7 @@ app.post('/order', (req, res) => {
 
 
         });
-        items.forEach(item => {
-            connection.query("INSERT INTO product_order (prd_id, order_id, quantity) VALUES (item.ProductId, inserted_id, item.Quantity)", (err1, rows) => {
-                if (!err1) {
-                    console.log("hurray");
-                    res.render('order', {});
-                } else {
-                    console.log(err1)
-                }
 
-            });
-
-        });
         /////////////////////--------end of  the problematic block--------------------
 
     }
