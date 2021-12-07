@@ -15,9 +15,11 @@
 
   <div class="container">
 
-    <button id="place-order" class="checkoutbutton" onclick="order()"><b>Place your order</b></button>
+    <form action="http://localhost:3002/order" method="post">
+      <!-- <button id="place-order" class="checkoutbutton" onclick="order()"><b>Place your order</b></button> -->
+      <button type="submit" id="place-order" class="checkoutbutton"><b>Place your order</b></button>
 
-    <form>
+
       <div class="Name_label">
         <label for="fname"> Name</label>
         <input type="text" id="fname" class="Name_text" name="firstname" placeholder="Your name..">
@@ -25,16 +27,16 @@
 
       <div class="Contact_label">
         <label for="phone-number">Phone Number</label>
-        <input type="text" id="phone-number" class="Contact_text" name="phone-number" placeholder="Your Contact No.."
-          pattern="[7-9]{1}[0-9]{9}>
+        <input type="text" id="phone-number" class="Contact_text" name="phone-number" placeholder="Your Contact No..">
       </div>
 
       <div>
-        <label for=" Location">Choose a Location:</label>
-        <select name="Locations" id="locations">
+        <label for="locations">Choose a Location: </label>
+        <select name="locations" id="locations">
           <option value="Please Select" selected>Please Select a delivery location!</option>
           <% locations.forEach(function(location){%>
-            <option value=" <%=location.id %> " > <%= location.city + "--" + location.name %>
+            <option value=" <%=location.id %> ">
+              <%= location.city + "--" + location.name %>
             </option>
             <%}); %>
         </select>
