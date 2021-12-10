@@ -193,7 +193,7 @@ var connection = mysql.createConnection(
     {
         host: "localhost",
         user: "root",
-        password: "Salam",
+        password: "darshan@9844",
         database: "sweet-bakery",
         multipleStatements: true
 
@@ -351,10 +351,11 @@ app.post('/order', (req, res) => {
                 inserted_id = rowss.insertId;
 
                 items.forEach(item => {
-                    var sql1 = "INSERT INTO product_order (prd_id, order_id, quantity) VALUES ('" + item.ProductId + "'," + inserted_id + ",'" + item.Quantity + "'" + ")";
+                    var sql1="INSERT INTO product_order (prd_id, order_id, quantity) VALUES ('" + item.ProductId + "'," + inserted_id + ",'" + item.Quantity + "'" +")";
                     connection.query(sql1, (err1, rows) => {
                         if (!err1) {
-                            res.render("order");
+                            console.log("hurray");
+                            res.render('order');
                         } else {
                             console.log(err1)
                         }
@@ -409,11 +410,6 @@ app.post('/updateCart', (request, response) => {
     response.json({ object });
 })
 
-app.get('/orderComplete', (request, response) => {
-
-    response.render('order');
-
-});
 
 app.listen(port, () => console.info(`listen on port ${port}`))
 
