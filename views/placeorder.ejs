@@ -26,7 +26,7 @@
       <div class="Contact_label">
         <label for="phone-number">Phone Number</label>
         <input type="text" id="phone-number" class="Contact_text" name="phone-number" placeholder="Your Contact No.."
-          pattern="[7-9]{1}[0-9]{9}>
+          pattern="[7-9]{1}[0-9]{9}">
       </div>
 
       <div>
@@ -34,7 +34,8 @@
         <select name="Locations" id="locations">
           <option value="Please Select" selected>Please Select a delivery location!</option>
           <% locations.forEach(function(location){%>
-            <option value=" <%=location.id %> " > <%= location.city + "--" + location.name %>
+            <option value=" <%=location.id %> ">
+              <%= location.city + "--" + location.name %>
             </option>
             <%}); %>
         </select>

@@ -193,7 +193,7 @@ var connection = mysql.createConnection(
     {
         host: "localhost",
         user: "root",
-        password: "darshan@9844",
+        password: "Salam",
         database: "sweet-bakery",
         multipleStatements: true
 
@@ -344,18 +344,25 @@ app.post('/order', (req, res) => {
         //https://stackoverflow.com/questions/45936021/node-mysql-sequential-query-execution
         let sql = "INSERT INTO orders (customer_name,delivery_loc_id, total,created_dt,updated_dt,phone_number,uuid) VALUES ('" + name + "'," + loc + "," + cart.GrandTotal + ",'" + date + "','" + date + "'," + num + ", '" + uuid + "'" + ")";
         console.log(sql);
+
         connection.query(sql, (err, rowss) => {
 
 
             if (!err) {
                 inserted_id = rowss.insertId;
+                console.log("hurray");
 
                 items.forEach(item => {
-                    var sql1="INSERT INTO product_order (prd_id, order_id, quantity) VALUES ('" + item.ProductId + "'," + inserted_id + ",'" + item.Quantity + "'" +")";
+                    var sql1 = "INSERT INTO product_order (prd_id, order_id, quantity) VALUES ('" + item.ProductId + "'," + inserted_id + ",'" + item.Quantity + "'" + ")";
                     connection.query(sql1, (err1, rows) => {
                         if (!err1) {
                             console.log("hurray");
-                            res.render('order');
+                            res.json(
+                                {
+                                    "redirectUrl": "localhost:" + port + "/orderComplete",
+                                    "uniqeId": uuid
+                                }
+                            );
                         } else {
                             console.log(err1)
                         }
@@ -369,6 +376,7 @@ app.post('/order', (req, res) => {
             }
 
 
+            console.log("hurray--outside");
 
 
         });
@@ -409,6 +417,14 @@ app.post('/updateCart', (request, response) => {
 
     response.json({ object });
 })
+
+app.get('/orderComplete/:uniqeId', (req, res) => {
+
+    const { uniqeId } = req.params;
+
+    res.render('order', { "orderId": uniqeId });
+
+});
 
 
 app.listen(port, () => console.info(`listen on port ${port}`))
