@@ -1,4 +1,7 @@
 //imports
+//add to prd
+const nodemailer = require('nodemailer');
+//add to prd
 const mysql = require("mysql2");
 const path = require("path");
 const express = require("express");
@@ -426,6 +429,38 @@ app.get('/orderComplete/:uniqeId', (req, res) => {
 
 });
 
+
+//add to prd
+app.get('/send-report', (req, res) => {
+
+
+
+    const transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+            user: 'sweet.bakery.report@gmail.com',
+            pass: '*****' // naturally, replace both with your real credentials or an application-specific password
+        }
+    });
+
+    const mailOptions = {
+        from: 'sweet.bakery.report@gmail.com',
+        to: 'omid_95@yahoo.com',
+        subject: 'Invoices due',
+        text: 'Dudes, we really need your money.'
+    };
+
+    transporter.sendMail(mailOptions, function (error, info) {
+        if (error) {
+            console.log(error);
+        } else {
+            console.log('Email sent: ' + info.response);
+        }
+    });
+
+
+});
+//add to prd
 
 app.listen(port, () => console.info(`listen on port ${port}`))
 
