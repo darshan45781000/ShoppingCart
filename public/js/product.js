@@ -30,7 +30,7 @@ if ('serviceWorker' in navigator) {
 
 function values(a) {
     var b = parseInt(a);
-    fetch('http://localhost:3002/delete', {
+    fetch('../delete', {
         headers: {
             'Content-type': 'application/json'
         },
@@ -57,7 +57,7 @@ function updateCart() {
     var productQuantitySelect = document.getElementById("quantity");
     var Quantity = productQuantitySelect.options[productQuantitySelect.selectedIndex].text;
     var total = Quantity * productPrice;
-    fetch('http://localhost:3002/updateCart', {
+    fetch('../updateCart', {
         headers: {
             'Content-type': 'application/json'
         },
@@ -95,7 +95,7 @@ function Send(aa, bb, cc, dd, ee) {
     console.log("helo");
     var total = parseInt(bb.value) * parseInt(cc);
     total = total.toString();
-    fetch('http://localhost:3002/insert', {
+    fetch('./insert', {
         headers: {
             'Content-type': 'application/json'
         },

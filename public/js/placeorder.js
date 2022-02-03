@@ -9,7 +9,7 @@ function order() {
     var location = Number(e);
 
 
-    fetch('http://localhost:3002/order', {
+    fetch('../order', {
         headers: {
             'Content-type': 'application/json'
         },
@@ -26,7 +26,7 @@ function order() {
         .then((data) => {
 
             console.log(data);
-            document.location = "http://" + data.redirectUrl + "/" + data.uniqeId;
+            document.location = "../orderComplete/" + data.uniqeId;
         })
         .catch((error) => {
             alert(error);

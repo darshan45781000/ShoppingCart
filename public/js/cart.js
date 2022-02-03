@@ -1,7 +1,7 @@
 function deleteItemFromCart(productId) {
 
     var Quantity = 0;
-    fetch('http://localhost:3002/updateCart', {
+    fetch('../updateCart', {
         headers: {
             'Content-type': 'application/json'
         },
@@ -28,15 +28,14 @@ function deleteItemFromCart(productId) {
 }
 
 
-function UpdateFunction(quantity, productid,price)
-{
-    var total =Number(document.getElementById("totalcost").textContent);
+function UpdateFunction(quantity, productid, price) {
+    var total = Number(document.getElementById("totalcost").textContent);
     document.getElementById("placeorder").disabled = true;
-   
+
     var Quantity = quantity;
-    var Price=price;
-    var ProductId=productid;
-    fetch('http://localhost:3002/updateCart', {
+    var Price = price;
+    var ProductId = productid;
+    fetch('../updateCart', {
         headers: {
             'Content-type': 'application/json'
         },
@@ -44,7 +43,7 @@ function UpdateFunction(quantity, productid,price)
         body: JSON.stringify({
 
             productId: ProductId,
-            price:Price ,
+            price: Price,
             imageUrl: "",
             productName: "",
             quantity: Quantity
@@ -53,9 +52,8 @@ function UpdateFunction(quantity, productid,price)
         .then((data) => {
 
             console.log(data);
-            if(total!=data.object.GrandTotal)
-            {
-               document.getElementById("placeorder").disabled = false;
+            if (total != data.object.GrandTotal) {
+                document.getElementById("placeorder").disabled = false;
             }
             document.getElementById("lblCartCoun1t").textContent = data.object.cartNumber;
             document.getElementById("totalcost").textContent = data.object.GrandTotal;
