@@ -1,6 +1,7 @@
 //imports
 //add to prd
 const nodemailer = require('nodemailer');
+const Excel = require("exceljs");
 //add to prd
 const mysql = require("mysql2");
 const path = require("path");
@@ -33,6 +34,56 @@ app.use(
 );
 app.use(bodyParser.json());
 const port = 3002
+////Prd addition
+const emailIt = async (rows) => {
+    const filename = 'Report.xlsx';
+    let workbook = new Excel.Workbook();
+    let worksheet = workbook.addWorksheet('Report');
+    worksheet.columns = [
+        { header: 'Customer Name', key: 'customer_name' },
+        { header: 'Name', key: 'name' },
+        { header: 'Total', key: 'total' },
+        { header: 'Quantity', key: 'quantity' },
+        { header: 'Location', key: 'location' }
+    ];
+    let data = rows;
+
+    data.forEach((e) => {
+        worksheet.addRow(e);
+    });
+    const buffer = await workbook.xlsx.writeBuffer();
+    const transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+            user: '*****',
+            pass: '*****' // naturally, replace both with your real credentials or an application-specific password
+        }
+    });
+
+    const mailOptions = {
+        from: 'sweet.bakery.report@gmail.com',
+        to: 'omid_95@yahoo.com,darshangowda457810@gmail.com',
+        subject: 'Invoices due',
+        text: 'Dudes, we really need your money.',
+        attachments: [
+            {
+                filename,
+                content: buffer,
+                contentType:
+                    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+            },
+        ],
+    };
+    await transporter.sendMail(mailOptions, function (error, info) {
+        if (error) {
+            console.log(error);
+        } else {
+            console.log('Email sent: ' + info.response);
+        }
+    });
+};
+////Prd addition end
+
 /////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////
@@ -434,29 +485,17 @@ app.get('/orderComplete/:uniqeId', (req, res) => {
 app.get('/send-report', (req, res) => {
 
 
+    connection.query("SELECT o.customer_name,p.name,o.total,po.quantity,d.name as location FROM`sweet-bakery`.orders o join`sweet-bakery`.product_order po on po.order_id = o.id join`sweet-bakery`.products p on p.id = po.prd_id join`sweet-bakery`.delivery_location d group by  o.customer_name, p.name, o.total, po.quantity,  location", (err, rows) => {
 
-    const transporter = nodemailer.createTransport({
-        service: 'gmail',
-        auth: {
-            user: 'sweet.bakery.report@gmail.com',
-            pass: '*****' // naturally, replace both with your real credentials or an application-specific password
+        if (!err) {
+
+            emailIt(rows);
+            res.status(200).send('report sent');
+
         }
-    });
+    }
 
-    const mailOptions = {
-        from: 'sweet.bakery.report@gmail.com',
-        to: 'omid_95@yahoo.com',
-        subject: 'Invoices due',
-        text: 'Dudes, we really need your money.'
-    };
-
-    transporter.sendMail(mailOptions, function (error, info) {
-        if (error) {
-            console.log(error);
-        } else {
-            console.log('Email sent: ' + info.response);
-        }
-    });
+    );
 
 
 });
